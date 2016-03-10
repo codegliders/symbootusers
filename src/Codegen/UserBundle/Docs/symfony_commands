@@ -1,0 +1,41 @@
+Preliminari:
+
+Utilizzo di composer, dopo aver definito i criteri in composer.json
+	php /usr/local/bin/composer.phar update
+
+Generazione progetto
+
+	Generarlo poi aprirlo in editor 
+	(con Netbeans è possibile creare progetti symfony direttamente dall'IDE)
+
+		php /usr/local/bin/composer.phar create-project symfony/framework-standard-edition symtest/ "2.5.*"-
+	Poi spostare composer nella root del progetto per maggiore comodità nell'inserimento dei percorsi
+
+Generazione delle entità, 
+	da effettuare dopo aver definito manualmente le classi e le necessarie (e opportune) annotazioni, 
+	che gestiscono tipi di campo, relazioni tra oggetti, ecc.
+	Porre attenzione alla scrittura delle annotazioni che sono fondamentali per la creazione di un db corretto da parte di doctrine
+
+		php app/console doctrine:generate:entities
+
+Utilizzo di doctrine per la generazione del db:
+
+		php app/console doctrine:schema:update --force
+
+Pulire la cache nell'ambiente di sviluppo:
+
+		php app/console cache:clear --env=dev
+
+Per i vari problemi con la cache:
+
+	i. impostare i permessi nelle cartelle:
+
+		sudo chmod -R 777 app/cache app/logs
+
+	ii. cambiare il proprietario delle cartelle assegnando la proprietà a www-data
+
+		sudo chown -R :www-data app/cache app/logs
+
+	iii. rilanciare cache:clear
+
+

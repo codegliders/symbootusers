@@ -1,0 +1,62 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+Aggiungi utente
+{% endblock %}
+
+{% block stylesheets %}
+      <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+   <div class="form-div">
+    <br>
+     <div class="form-title">
+        Modifica ruolo
+    </div>S
+     <br>
+    {{ form_start (form) }}
+     <div class="form-even">
+   Nome ruolo
+    </div>
+      <div class="form-odd">
+    {{ form_widget(form.name) }}
+      </div>
+       
+     <div class="clear"></div>
+    <br/>
+     <div class="form-even">
+    {#{ form_label(form.role) }#} Descrizione
+     </div>
+    <div class="form-odd">
+    {{ form_widget(form.description) }}
+     </div>
+   
+     <div class="clear"></div>
+       <br/>
+    <div class="form-even">
+        Livello di accesso
+    </div>
+     <div class="form-odd">
+        {{ form_widget(form.accessLevel) }}
+    </div>
+    <br/>
+     <div class="clear"></div>
+       <br/>
+ 
+   
+     <div class="clear"></div>
+       <br/>
+      <div class="form-even">
+       &nbsp;
+    </div>
+     <div class="form-odd">
+        {{ form_widget(form.cancel) }}
+         {{ form_widget(form.save) }}
+    </div>
+     <div class="clear"></div>
+    {{ form_end(form) }}
+</div>
+
+    
+{% endblock %}

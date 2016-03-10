@@ -1,0 +1,33 @@
+Codegen\UserBundle\Entity\Role:
+    Source:
+        columns:
+            id: ~
+            name: ~
+            description: ~
+            accessLevel: ~        
+        groupBy: ~
+        filterable: ~
+    Columns:
+        id:
+            filterable: false
+            visible: true
+            id: id
+            title: id
+        name:
+            filterable: true
+            visible: true
+            id: name
+            title: Nome Ruolo
+            
+        description:
+            filterable: true
+            visible: true
+            id: description
+            title: Descrizione Ruolo
+            
+        accessLevel:
+            filterable: true
+            visible: true
+            id: accessLevel
+            title: Livello di accesso
+       

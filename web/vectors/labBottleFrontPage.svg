@@ -1,0 +1,18 @@
+ <svg
+                            xmlns:svg="http://www.w3.org/2000/svg"
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="36.974159"
+                            width="32.056206"
+                            >
+                        <g
+
+                            id="layer1"
+                            transform="translate(-17.355041,-86.298672)">
+                        <path
+                            sodipodi:nodetypes="ccccccccccc"
+                            id="path2388"
+                            d="m 26.787743,86.30515 c 2.082923,2.045166 1.768544,3.591245 1.791186,6.066761 l 0.0715,7.817729 -10.145524,15.19782 c -2.455207,4.09337 -0.794263,8.09827 3.232742,7.86177 l 23.287163,0.0236 c 4.352817,-0.0183 5.942111,-4.05178 2.568848,-8.30187 L 37.96987,100.22743 37.788743,92.397182 c -0.02264,-2.475516 -0.365249,-4.015586 1.679917,-6.09851 l -12.680917,0.0065 z"
+                            style="fill:#3771c8;fill-opacity:1;stroke:none;stroke-width:8;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+                            inkscape:connector-curvature="0" />
+                        </g>
+                        </svg>

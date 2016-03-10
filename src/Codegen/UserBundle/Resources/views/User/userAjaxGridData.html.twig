@@ -1,0 +1,35 @@
+{%if users | length ==0%}
+    <tr>
+        <td colspan="7" align="center" style="padding-top:40px;font-style: italic">Nessun risultato trovato</td>
+    </tr>
+    {% else %}
+{% for user in users %}
+    <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.firstname}}</td>
+        <td>{{user.lastname}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.email}}</td>
+        <td>
+             {%if (user.isActive==1)%}
+             <span title="Utente attivo" id="isActiveMarkOK{{ user.id}}" class="glyphicon glyphicon-exclamation-sign blue"></span>&nbsp;
+           
+                {% else %}
+                <!--span title="Utente disattivato" id="isActivaMarkKO{{ user.id}}" class="glyphicon glyphicon-ban-circle blue"></span-->&nbsp;
+             {% endif %}
+             </td>
+        <td>
+            <!--button class="btn btn-default view" data-toggle="modal" data-target="#viewUserModal"--> 
+            <span data-toggle="modal" data-id="{{ user.id}}" data-target="#viewUserModal" title="Visualizza" id="viewRecord{{ user.id}}" class="glyphicon glyphicon-eye-open blue"></span>
+        <!--/button-->&nbsp;
+
+            <span data-toggle="modal" data-id="{{ user.id}}" data-target="#editUserModal"  title="Modifica" id="editRecord{{ user.id}}" class="glyphicon glyphicon-edit blue"></span>&nbsp;
+            <span data-toggle="modal" data-target="#usersChangePwdModal" data-id="{{ user.id}}" title="Cambia password" id="pwdChange{{ user.id}}" class="glyphicon glyphicon-pencil blue"></span>&nbsp;
+            <span data-toggle="modal" title="Elimina" data-id="{{ user.id}}" id="deleteRecord{{ user.id}}" data-target="#delUserModal"  title="Elimina" class="glyphicon glyphicon-remove-circle blue del"></span>
+        </td>
+    </tr>
+{% endfor %}
+
+{% endif %}
+
+

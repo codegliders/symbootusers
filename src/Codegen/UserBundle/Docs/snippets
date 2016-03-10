@@ -1,0 +1,38 @@
+properties:
+        email:
+            - Email: 
+                message: The email "{{ value }}" is not a valid email.
+                checkMX: true
+
+
+
+
+    /**
+     * test for datagrid source - does not work
+     * @var roledescription
+     *
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="...")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="role_id", referencedColumnName="id")
+     * })
+     * 
+     *@GRID\Column(field="role.description",visible="true", title="Ruolo", size="200")
+     */
+    //private $roledescription;
+
+ * @GRID\Source(columns="role.description", role="description", groupBy={"username"})
+
+
+<?php
+   /**
+     * @var roledescription
+     *
+     * @ORM\ManyToOne(targetEntity="Codegen\UserBundle\Entity\Role")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * })
+     * 
+     * @GRID\Column(field="role.description", visible="true", title="Ruolo", size="200")
+     */
+    private $roledescription;
+

@@ -1,0 +1,104 @@
+{% extends '::bsbase.html.twig' %}
+
+{% block title %}
+    Aggiungi utente
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />
+
+
+    <link href="{{ asset('plugins/bootstrap-multiselect/css/bootstrap-multiselect.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('plugins/jquery-2.1.1.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')}}"></script>
+    <script type="text/javascript">
+        $(function() {
+
+            /* $("#userform_role").selectmenu({width: 230});*/
+            $("#userform_groups").multiselect();
+        });
+
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="form-div">
+        <div class="form-title">
+            Aggiungi utente
+        </div>
+        <br>
+        {{ form_errors(form.email) }}{{ form_errors(form.username) }}
+        {{ form_start (form) }}
+        <div class="form-even">
+            Nome utente
+        </div>
+        <div class="form-odd">
+            {{ form_widget(form.username) }}
+        </div>
+
+        <div class="clear"></div>
+        <br/>
+        <div class="form-even">
+            {#{ form_label(form.role) }#} Ruolo
+        </div>
+        <div class="form-odd">
+            {{ form_widget(form.role) }}
+        </div>
+
+        <div class="clear"></div>
+        <br/>
+        <div class="form-even">
+            Email
+        </div>
+        <div class="form-odd">
+            {{ form_widget(form.email) }}
+        </div>
+
+        <div class="clear"></div>
+        <br/>
+        <div class="form-even">
+            Password
+        </div>
+        <div class="form-odd">
+            {{ form_widget(form.password) }}
+        </div>
+        <div class="clear"></div>
+        <br/>
+        <div class="form-even">
+            Gruppi
+        </div>
+        <div class="form-odd">
+            <div>
+                {{ form_widget(form.groups) }}</div>
+        </div>
+        <!--Managing jquery multiselect dimensions-->
+        <div class="userform_add_group_spacer" style=""></div>
+
+        <div class="form-even">
+            Attivo
+        </div>
+        <div class="form-odd">
+            {{ form_widget(form.isActive) }}
+        </div>
+        <div class="clear"></div>
+        <br/>
+        <div class="form-even">
+            &nbsp;
+        </div>
+        <div class="form-odd">
+            {{ form_widget(form.cancel) }}
+            	
+
+{{ form_widget(form.save, { 'label': 'Cliccami' }) }}
+
+        </div>
+        <div class="clear"></div>
+        {{ form_end(form) }}
+    </div>
+{% endblock%}

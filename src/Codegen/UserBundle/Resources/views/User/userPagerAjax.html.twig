@@ -1,0 +1,58 @@
+
+{# display pager and recordcount is results available#}
+{% if allUsers | length >0 %} 
+    <div style="">
+        <div style="float:left;margin:20px">
+
+            <div style="float:left;margin:10px;">Visualizza </div>
+            <div style="float:left;">{{ form_widget(form.numRecords) }} </div>
+            <div style="float:left;margin:10px;">record per pagina</div>
+
+        </div>
+
+        <div style="float:left">
+            <ul class="pagination" id="paginationList">
+                <li id="pagelist0"><a  class="pages" id="0">&laquo;</a></li>
+                    {% for i in 0..(numPages-1) %}
+                        {%  if    app.request.get('page') ==(i+1)%}
+                        <li id="pagelist{{i+1}}" class="active"><a class="pages" id="{{i+1}}">{{ i+1 }}</a></li>
+                        {% else %} 
+                        <li id="pagelist{{i+1}}"><a class="pages" id="{{i+1}}">{{ i+1 }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                <li>
+                    {%  if    ( allUsers | length)< itemsPerPage %}
+                        <a  class="pages" id="{{ (((( allUsers | length) / itemsPerPage))) | number_format(0) }}" >&raquo;</a>
+                    {% else %} 
+                        <a  class="pages" id="{{ (((( allUsers | length) / itemsPerPage))+1) | number_format(0) }}" >&raquo;</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+
+
+        <div style="float:left;margin-left:20px;padding-top:30px"> 
+      
+       Record 
+       {% if (allUsers | length) <  ((page -1) * itemsPerPage) %}
+            {{ allUsers | length}}
+
+        {% else %}
+
+            {{ ((page-1) * itemsPerPage +1)  }} 
+        {% endif%}
+        - 
+        {% if allUsers | length <  ((page) * itemsPerPage) %}
+            {{ allUsers | length }}
+        {% else %}
+            {{ (page) * itemsPerPage}} 
+
+        {% endif %}
+        di {{ allUsers | length}}
+     
+
+    </div>
+
+    {# end display pager and recordcount#}
+    {% endif %}
+    </div>

@@ -1,0 +1,497 @@
+{% extends '::bsbase.html.twig' %}
+
+{% block title %} Elenco utenti
+{% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />
+
+
+    <link href="{{ asset('plugins/bootstrap-multiselect/css/bootstrap-multiselect.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/fuelux/css/fuelux.min.css') }}" type="text/css" rel="stylesheet" />
+      <link href="{{ asset('plugins/jquery-ui-custom/jquery-ui.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/bootstrap-table/bootstrap-table.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/jui_filter_rules/minified/jquery.jui_filter_rules.bs.min.css') }}" type="text/css" rel="stylesheet" />
+        <link href="{{ asset('plugins/bs_pagination/jquery.bs_pagination.bs2.min.css') }}" type="text/css" rel="stylesheet" />
+        <link href="{{ asset('plugins/bs_grid/minified/jquery.bs_grid.bs2.min.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('plugins/jquery-2.1.1.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('plugins/bootstrap-table/bootstrap-table.js') }}" ></script>
+     <script type="text/javascript" src="{{ asset('plugins/jquery-ui-custom/jquery-ui.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')}}"></script>
+     <script type="text/javascript" src="{{ asset('plugins/fuelux/js/fuelux.min.js') }}" ></script>
+         <script type="text/javascript" src="{{ asset('plugins/bs_pagination/localization/en.js') }}" ></script>
+      <script type="text/javascript" src="{{ asset('plugins/bs_pagination/jquery.bs_pagination.js') }}" ></script>
+         <script type="text/javascript" src="{{ asset('plugins/jui_filter_rules/localization/en.js') }}" ></script>
+      <script type="text/javascript" src="{{ asset('plugins/jui_filter_rules/minified/jquery.jui_filter_rules.min.js') }}" ></script>
+         <script type="text/javascript" src="{{ asset('plugins/bs_grid/localization/en.bs2.js') }}" ></script>
+     <script type="text/javascript" src="{{ asset('plugins/bs_grid/jquery.bs_grid.js') }}" ></script>
+    <script type="text/javascript">
+        $(function() {
+
+            $("#userform_role").multiselect();
+            $("#userform_groups").multiselect();
+        });
+
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="modal fade" id="addUserModal">
+        {{ form_start (form) }}
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Aggiungi utente</h4>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="form-group">
+
+
+
+
+                        <label> Nome utente</label>
+
+                        {{ form_widget(form.username) }} {{ form_errors(form.username) }}
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>   Email</label>
+
+
+                        {{ form_widget(form.email) }} {{ form_errors(form.email) }}
+
+                    </div>
+                    <div class="form-group">
+
+                        <label>  Password</label>
+
+
+                        {{ form_widget(form.password) }}
+
+                    </div>
+                    <div class="form-group">
+
+                        <label>  Gruppi</label>
+
+
+                        {{ form_widget(form.groups) }}
+
+                    </div>
+                    <div class="form-group">
+
+                        {#{ form_label(form.role) }#}  <label> Ruolo</label>
+
+
+                        {{ form_widget(form.role) }}
+
+                    </div>
+
+                    <div class="checkbox">
+
+
+                        <label> 
+
+                            {{ form_widget(form.isActive) }} Attivo
+                        </label>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+
+
+                    {{ form_widget(form.cancel) }}
+                    {{ form_widget(form.save) }}
+                </div>
+
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+
+
+    <table  id="table" data-toggle="table" data-side-pagination="server" data-url="{{ path ('jsonlistusers') }}" data-pagination="true" data-height="299" data-sort-name="username" data-sort-order="desc">
+        <thead>
+            <tr>
+                <th data-checkbox="true"></th>
+                 <th data-field="id" data-align="right" data-sortable="true">
+                    #
+                </th>
+                <th data-field="username" data-align="right" data-sortable="true">
+                    Nome utente
+                </th>
+               
+                <th data-field="email" data-align="right" data-sortable="true">
+                    Email
+                </th>
+                <th data-field="isActive" data-align="right"  data-sortable="true">
+                    Attivo
+                </th>
+                <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
+                    Azioni
+                </th>
+                    
+            </tr>
+        </thead>
+    </table>
+        <div id="demo_grid1"></div>
+        <br/>
+    <script>
+        //CHINA
+        function operateFormatter(value, row, index) {
+        return [
+            
+            '&#160;<a class="edit ml10" href="javascript:void(0)" title="Edit">',
+                '<i class="glyphicon glyphicon-edit"></i>',
+            '</a>',
+            '&#160;<a class="remove ml10" href="javascript:void(0)" title="Remove">',
+                '<i class="glyphicon glyphicon-remove"></i>',
+            '</a>'
+        ].join('');
+    }
+
+    window.operateEvents = {
+        'click .like': function (e, value, row, index) {
+            alert('You click like icon, row: ' + JSON.stringify(row));
+            console.log(value, row, index);
+        },
+        'click .edit': function (e, value, row, index) {
+            alert('You click edit icon, row: ' + JSON.stringify(row));
+            console.log(value, row, index);
+        },
+        'click .remove': function (e, value, row, index) {
+            alert('You click remove icon, row: ' + JSON.stringify(row));
+            console.log(value, row, index);
+        }
+    };
+        /* $('#table').bootstrapTable({
+         url: '/symbootusers/app_dev.php/web/jsonlistusers'
+         });
+         $.get('http://localhost/symbootusers/app_dev.php/web/data.json', function(data) {
+         $('#table').bootstrapTable({
+         data: data
+         });
+         
+         });*/
+  
+    
+    /*END ZHIXIN TABLE*/
+    
+    /*PONTIKIS TABLE*/
+    $(function() {
+ 
+    $("#demo_grid1").bs_grid({
+ 
+ 
+        ajaxFetchDataURL: "{{ path('jsonlistusers')}}",
+        row_primary_key: "id",
+ 
+        columns: [
+            {field: "id", header: "#", visible: "no"},
+            {field: "username", header: "Nome Utente"},
+            {field: "email", header: "Email","sortable": "no"},
+            {field: "isActive", header: "Attivo"},
+         
+        ],
+ 
+        sorting: [
+            {sortingName: "id", field: "id", order: "none"},
+            {sortingName: "username", field: "lastname", order: "ascending"},
+            {sortingName: "email", field: "email", order: "ascending"},
+           
+        ],
+ 
+        filterOptions: {
+            filters: [
+                {
+                    filterName: "username", "filterType": "text", field: "username", filterLabel: "Nome utente",
+                    excluded_operators: ["in", "not_in"],
+                    filter_interface: [
+                        {
+                            filter_element: "input",
+                            filter_element_attributes: {"type": "text"}
+                        }
+                    ]
+                }
+            
+            ]
+        }
+    });
+ 
+});
+
+/**END PONTIKIS*/
+/*FUELUX*/
+
+
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['underscore'], factory);
+    } else {
+        root.TestDataSource = factory();
+    }
+}(this, function () {
+
+    var TestDataSource = function (options) {
+        this._formatter = options.formatter;
+        this._columns = options.columns;
+        this._delay = options.delay || 0;
+    };
+
+    TestDataSource.prototype = {
+
+        columns: function () {
+            return this._columns;
+        },
+
+        data: function (options, callback) {
+            var self = this;
+
+            setTimeout(function () {
+                var data;
+                $.ajax({
+                    url: '/data.php',
+                    dataType: 'json',
+                    async: false,
+                    success: function(result) {
+                        data = result;
+                    }
+                });
+
+                                    // SEARCHING
+                if (options.search) {
+                    data = _.filter(data, function (item) {
+                        var match = false;
+
+                        _.each(item, function (prop) {
+                            if (_.isString(prop) || _.isFinite(prop)) {
+                                if (prop.toString().toLowerCase().indexOf(options.search.toLowerCase()) !== -1) match = true;
+                            }
+                        });
+
+                        return match;
+                    });
+                }
+
+
+                var count = data.length;
+
+                // SORTING
+                if (options.sortProperty) {
+                    data = _.sortBy(data, options.sortProperty);
+                    if (options.sortDirection === 'desc') data.reverse();
+                }
+
+                // PAGING
+                var startIndex = options.pageIndex * options.pageSize;
+                var endIndex = startIndex + options.pageSize;
+                var end = (endIndex > count) ? count : endIndex;
+                var pages = Math.ceil(count / options.pageSize);
+                var page = options.pageIndex + 1;
+                var start = startIndex + 1;
+
+                data = data.slice(startIndex, endIndex);
+
+                if (self._formatter) self._formatter(data);
+
+                callback({ data: data, start: start, end: end, count: count, pages: pages, page: page });
+
+            }, this._delay)
+        }
+    };
+
+    return TestDataSource;
+}));
+
+var dataSource = new TestDataSource({
+columns: [
+{
+property: 'id',
+label: 'Id',
+sortable: true
+},
+{
+property: 'username',
+label: 'Username',
+sortable: true
+},
+{
+property: 'email',
+label: 'Email',
+sortable: true
+}
+],
+delay: 250
+});
+
+$(document).ready(function (){
+    
+            var DataSourceTree = function (options) {
+                this.url = options.url;
+            }
+
+            DataSourceTree.prototype.data = function (options, callback) {
+                var self = this;
+                var $data = null;
+
+                var param = null
+
+                if (!("name" in options) && !("type" in options)) {
+                    param = 0;//load the first level  
+                }
+                else if ("type" in options && options.type == "folder") {
+                    if ("additionalParameters" in options && "children" in options.additionalParameters) {
+                        param = options.additionalParameters["id"];
+                    }
+                }
+
+                if (param != null) {                    
+                    $.ajax({
+                        url: this.url,
+                        data: 'id=' + param,
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.status == "OK") 
+                                callback({ data: response.data })
+                        },
+                        error: function (response) {
+                            //console.log(response);
+                        }
+                    })
+                }
+            };
+
+     $('#[YOURTREEVIEWID]').tree({
+            dataSource: new DataSourceTree({ url: '[PATH TO SERVICE]' }),
+           
+            loadingHTML: '<div class="tree-loading"><i class="icon-refresh icon-spin blue"></i></div>',
+           
+            
+        });
+$('#myRepeater').repeater({
+            dataSource: new DataSourceTree({ url: '[PATH TO SERVICE]' }),
+           
+            loadingHTML: '<div class="tree-loading"><i class="icon-refresh icon-spin blue"></i></div>',
+           
+            
+        });
+});
+/*END FUELUX*/
+    </script>
+    <br>
+
+
+<div class="repeater" id="myRepeater">
+  <div class="repeater-header">
+    <div class="repeater-header-left">
+      <span class="repeater-title">Awesome Repeater</span>
+      <div class="repeater-search">
+        <div class="search input-group">
+          <input type="search" class="form-control" placeholder="Search"/>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">
+              <span class="glyphicon glyphicon-search"></span>
+              <span class="sr-only">Search</span>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="repeater-header-right">
+      <div class="btn-group selectlist repeater-filters" data-resize="auto">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <span class="selected-label">&nbsp;</span>
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Filters</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li data-value="all" data-selected="true"><a href="#">all</a></li>
+          <li data-value="some"><a href="#">some</a></li>
+          <li data-value="others"><a href="#">others</a></li>
+        </ul>
+        <input class="hidden hidden-field" name="filterSelection" readonly="readonly" aria-hidden="true" type="text"/>
+      </div>
+      <div class="btn-group repeater-views" data-toggle="buttons">
+        <label class="btn btn-default active">
+          <input name="repeaterViews" type="radio" value="list"><span class="glyphicon glyphicon-list"></span>
+        </label>
+        <label class="btn btn-default">
+          <input name="repeaterViews" type="radio" value="thumbnail"><span class="glyphicon glyphicon-th"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="repeater-viewport">
+    <div class="repeater-canvas"></div>
+    <div class="loader repeater-loader"></div>
+  </div>
+  <div class="repeater-footer">
+    <div class="repeater-footer-left">
+      <div class="repeater-itemization">
+        <span><span class="repeater-start"></span> - <span class="repeater-end"></span> of <span class="repeater-count"></span> items</span>
+        <div class="btn-group selectlist" data-resize="auto">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="selected-label">&nbsp;</span>
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li data-value="5"><a href="#">5</a></li>
+            <li data-value="10" data-selected="true"><a href="#">10</a></li>
+            <li data-value="20"><a href="#">20</a></li>
+            <li data-value="50" data-foo="bar" data-fizz="buzz"><a href="#">50</a></li>
+            <li data-value="100"><a href="#">100</a></li>
+          </ul>
+          <input class="hidden hidden-field" name="itemsPerPage" readonly="readonly" aria-hidden="true" type="text"/>
+        </div>
+        <span>Per Page</span>
+      </div>
+    </div>
+    <div class="repeater-footer-right">
+      <div class="repeater-pagination">
+        <button type="button" class="btn btn-default btn-sm repeater-prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="sr-only">Previous Page</span>
+        </button>
+        <label class="page-label" id="myPageLabel">Page</label>
+        <div class="repeater-primaryPaging active">
+          <div class="input-group input-append dropdown combobox">
+            <input type="text" class="form-control" aria-labelledby="myPageLabel">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right"></ul>
+            </div>
+          </div>
+        </div>
+        <input type="text" class="form-control repeater-secondaryPaging" aria-labelledby="myPageLabel">
+        <span>of <span class="repeater-pages"></span></span>
+        <button type="button" class="btn btn-default btn-sm repeater-next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+          <span class="sr-only">Next Page</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <button class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">
+        Aggiungi utente
+    </button>
+{% endblock %}
+

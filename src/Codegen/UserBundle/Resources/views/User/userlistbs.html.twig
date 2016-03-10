@@ -1,0 +1,411 @@
+{% extends '::bsbase.html.twig' %}
+
+{% block title %}Code Gliders Lab - Elenco utenti {% endblock %}
+{% block stylesheets %}
+
+
+
+    <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />
+
+    <link href="{{ asset('plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/bootstrap-multiselect/css/bootstrap-multiselect.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+
+    <link href="{{ asset('plugins/jquery-ui-custom/jquery-ui.css') }}" type="text/css" rel="stylesheet" />
+
+    <!--for multiselect-->
+    <link href="{{ asset('plugins/jQueryUI/jquery-ui-multiselect/css/ui.multiselect.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/lou-multi-select/css/multi-select.css')}}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('plugins/jquery-2.1.1.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}" ></script>
+
+    <script type="text/javascript" src="{{ asset('plugins/jquery-ui-custom/jquery-ui.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')}}"></script>
+
+    <script type="text/javascript" src="{{ asset('plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js') }}" ></script>
+
+    <script src="{{ asset('plugins/lou-multi-select/js/jquery.multi-select.js')}}"></script>
+
+    <!-- PAGE-SPECIFIC JAVASCRIPT INCLUSION-->
+    {% include "CodegenUserBundle:User:userlistbs.js.twig" %}
+    <!-- END PAGE-SPECIFIC JAVASCRIPT INCLUSION-->
+
+{% endblock %}
+
+{% block body %}
+
+
+    <!--view modal-->
+
+    <div class="modal fade" id="viewUserModal">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-user blue"> </span>&nbsp;&nbsp;Visualizza utente</h4>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="form-group">
+
+                        <label> Nome </div></label>
+                    <div class="well">
+                        <div id="firstLastName"></div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label> Nome utente</label>
+                        <div class="well">
+                            <div id="viewUsername"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>   Email</label>
+
+                        <div class="well">
+                            <div id="viewEmail"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label> Ruolo</label>
+                        <div class="well">
+                            <div id="viewRole"></div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group">
+
+
+                        <label> 
+
+                            Attivo
+                        </label>
+                        <div class="well">
+                            <div id="viewIsActive"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Chiudi</button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <!--end view modal-->
+
+
+    <!--pwd change modal-->
+
+    <div class="modal fade" id="usersChangePwdModal">
+        {{form_start(formchangepwd)}}
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-user wrnred"> </span>&nbsp;&nbsp;Modifica Password</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-danger ">
+                        <div class="form-group">
+                            Modifica password per l'utente:  
+                            <label>  <div id="pwdChangeFirstLastName"></div></label>
+
+
+
+
+                            {{form_widget(formchangepwd.password)}}
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    {{form_widget(formchangepwd.save)}}
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+
+                </div>
+            </div>
+        </div>
+
+        {{form_end(formchangepwd)}}
+    </div>
+    <!--end pwd change modal-->
+
+
+    <!--add modal-->
+    {{form_start(formadd)}}
+    <div class="modal fade bs-example-modal-lg" id="addUserModal">
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <span class="glyphicon glyphicon-user blue">
+
+                        </span>
+                        &nbsp;&nbsp;Aggiungi utente</h4>
+                </div>
+                <div class="modal-body" style="height: 430px;">
+
+                    <div style="clear:both;padding:10px;">
+                        <div id="editmodalleft" style="float:left;width:50%;padding-left: 10px;padding-right: 10px;">
+
+                            <div class="form-group">
+
+                                <label> Nome</label>
+
+                                {{ form_widget(formadd.firstname) }} {{ form_errors(formadd.firstname) }}
+
+                            </div>
+                            <div class="form-group">
+                                <label> Login</label>
+
+                                {{ form_widget(formadd.username) }} {{ form_errors(formadd.username) }}
+
+                            </div>
+                            <div class="form-group">
+
+                                <label>  Password</label>
+
+                                {{ form_widget(formadd.password) }}
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label> Ruolo</label>
+
+
+                                {{ form_widget(formadd.role) }}
+
+                            </div>
+
+                            <div class="form-group">
+
+
+                                <label> 
+
+                                    Attivo
+                                </label>
+                                {{ form_widget(formadd.isActive) }} 
+                            </div>
+                        </div>
+
+                        <div id="editmodalright" style="float:left;width:50%;padding-left: 10px;padding-right: 10px;">
+
+                            <div class="form-group">
+                                <label> Cognome</label>
+
+                                {{ form_widget(formadd.lastname) }} {{ form_errors(formadd.lastname) }}
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>   Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">@</span>
+
+                                    {{ form_widget(formadd.email) }} {{ form_errors(formadd.email) }}
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+
+                                <label>  Gruppi</label>
+                                <div>
+
+                                    {{ form_widget(formadd.groups) }}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    {{ form_widget(formadd.cancel) }} 
+                    {{ form_widget(formadd.save) }} 
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+    {{form_end(formadd)}}
+    <!--end add modal-->
+
+
+    <!--edit modal-->
+
+    <div class="modal fade bs-example-modal-lg" id="editUserModal">
+        <!--div class="modal-dialog modal-lg" -->
+        <!--div class="modal-dialog">
+        <!-- keep for ajax-extracting only a part of the dialog>
+
+  </div>
+</div-->
+        <!--/div-->
+    </div>
+    <!--end edit modal-->
+
+    <!--delete modal-->
+
+    <div class="modal fade" id="delUserModal">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Chiudi</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-user wrnred"> </span>&nbsp;&nbsp;Elimina Utente</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-danger ">
+                        <!--span class="glyphicon glyphicon-warning-sign danger"></span-->
+                        <strong>Attenzione!</strong>
+                        <br/>
+                        Sei sicuro di voler eliminare l'utente <strong id="delFirstLastName"></strong> ?
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+
+                        Elimina utente
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <!--end delete modal-->
+
+
+
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#" role="tab" data-toggle="tab">Code Gliders Lab: Utenti</a></li>
+
+    </ul>
+    <div id="table-container" >
+
+        <div style="clear:both;">
+            <!--div id="loading" style="display:none;   display: table;padding-top: 60px;
+                 margin: 0 auto;"><span class="glyphicon glyphicon-refresh blue"></span>&nbsp;&nbsp;Loading...</div-->
+
+            <table class="table table-hover" >
+                <thead>
+                    <tr>
+                        <th>#
+                            <!--span title="Ordine ascendente" id="btnOrderIdUp" class="glyphicon glyphicon-chevron-up blue"></span-->
+                            <span title="Ordina colonna"  id="btnOrderidMinus" class="glyphicon glyphicon-chevron-down blue"></span>
+                            <!--span title="Ordine discendente"  id="btnOrderIdDown" class="glyphicon glyphicon-chevron-down blue"></span-->
+                        </th>
+                        <th>Nome &nbsp;
+                            <!--<span title="Ordine ascendente" id="btnOrderFirstnameUp" class="glyphicon glyphicon-chevron-up blue"></span-->
+                            <span title="Ordina colonna"  id="btnOrderfirstnameMinus" class="glyphicon glyphicon-minus blue"></span>
+                            <!-- <span title="Ordine discendente"  id="btnOrderFirstnameDown" class="glyphicon glyphicon-chevron-down blue"></span-->
+                        </th>
+                        <th>Cognome &nbsp;
+                            <span title="Ordina colonna"  id="btnOrderlastnameMinus" class="glyphicon glyphicon-minus blue"></span>
+                        </th>
+                        <th>Username &nbsp;
+                            <span title="Ordine ascendente" id="btnOrderusernameUp" class="glyphicon glyphicon-minus blue"></span>
+                            <!--<span title="Ordine discendente" id="btnOrderusernameDown" class="glyphicon glyphicon-chevron-down blue"></span-->
+                        </th>
+                        <th>Email &nbsp;
+                            <!--<span title="Ordine ascendente" id="btnOrderemailUp" class="glyphicon glyphicon-chevron-up blue">
+
+                        </span--><span title="Ordine discendente" id="btnOrderemailDown" class="glyphicon glyphicon-minus blue"></span>
+                        </th>
+                        <th>Attivo &nbsp;
+                            <!--<span title="Ordine ascendente" id="btnOrderEmailUp" class="glyphicon glyphicon-chevron-up blue">
+
+                        </span--><span title="Ordine discendente" id="btnOrderisActiveDown" class="glyphicon glyphicon-minus blue"></span>
+                        </th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody >
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div style="width:100%;clear:both">
+        <div style="margin:0 auto;width:300px;" id="txtSearchString"></div>
+    </div>
+
+    <div id="bar-container">
+
+        <div style="float:left" id="pager-container"> 
+
+        </div>
+        <div style="float:right;margin:20px;"> 
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">
+                <span class="glyphicon glyphicon-user"> </span>&nbsp;  Aggiungi utente
+            </button>
+        </div>
+        <div style="float:right;margin-top:20px;">
+
+            <div style="float:right;width:160px;"> <div class="input-group">
+                    <input type="text" id="txtSearch" class="form-control" placeholder="Cerca...">
+                    <span class="input-group-btn">
+
+                        <button type="button" id="btnSearch" class="btn btn-primary" title="Cerca" >&nbsp;
+                            <span id="glSearch" class="glyphicon glyphicon-search"> </span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div style="float:right;"> 
+                <button type="button" id="btnFilter" class="btn btn-primary" title="Attiva/disattiva filtro" >&nbsp;<span id="glFilter" class="glyphicon glyphicon-filter"> </span></button>&nbsp;</div>
+
+
+        </div>
+
+    </div>
+
+
+
+{% endblock %}
+

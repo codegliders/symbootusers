@@ -1,0 +1,84 @@
+    <!-- bsgrid-->
+            <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-7 col-md-12"> 
+                    <div style="float:left" id="pager-container"> 
+
+
+                    </div>
+
+                </div>
+                <div class="col-xs-2 col-md-6">  
+                     
+                         
+                    <div style="float:right;margin:20px;"> 
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">
+                            Aggiungi utente
+                        </button>
+                    </div>
+                   
+                </div>
+                 <div class="col-xs-3 col-md-6"> 
+                      <div style="float:right;margin-top:20px;">
+                        <div style="float:right;width:160px;"><input type="text" class="form-control" id="searchInput" placeholder="Cerca.."></div>
+                        <div style="float:left">&nbsp;<button type="button" class="btn btn-primary" >Cerca</button></div>
+                    </div>
+                 </div>
+            </div>
+            </div>
+            <!-- end bsgrid-->
+
+<!--pager--> 
+
+<!--div style="display:table-row">
+                    <div style="float:left;margin:20px">
+    
+                        <div style="float:left;margin:10px;">Visualizza </div>
+                        <div style="float:left;">{# form_widget(form.numRecords)#} </div>
+                        <div style="float:left;margin:10px;">record per pagina </div>
+    
+                    </div>
+                    <div  style="float:left">
+                        <div style="float:left">
+                            <ul class="pagination" id="paginationList">
+                                <li><a href="1">&laquo;</a></li>
+                {% for i in 0..(numPages -1) %}
+                    {% if    app.request.get('page') ==(i+1)%}
+                    <li id="pagelist{{i+1}}" class="active">
+                        <a class="pages" id="{{i+1}}">{{ i+1 }}</a>
+                        <!--a href="{{i+1}}">{{ i+1 }}</a>
+                    </li>
+                    {% else %} 
+                        <li id="pagelist{{i+1}}">
+                            <a class="pages" id="{{i+1}}">{{ i+1 }}</a>
+                            <!--a href="{{i+1}}">{{ i+1 }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                <li><a class="pages" href="{{ (((( allUsers | length) / itemsPerPage))+1) | number_format(0) }}">&raquo;</a></li>
+            </ul>
+        </div>
+
+        <div style="float:left;margin:20px;padding-top:10px;"> 
+            <div style="float:left" id="recfirst">
+                <div style="float:left" id="recinit">
+                    Record {% if allUsers | length <  ((page-1) * itemsPerPage) %}
+                {{ allUsers | length}}
+
+                {% else %}
+
+                    {{ ((app.request.get('page')-1) * itemsPerPage +1)  }} 
+                    {% endif%}
+                        - 
+                        {% if allUsers | length <  ((app.request.get('page')) * itemsPerPage) %}
+                            {{ allUsers | length }}
+                        {% else %}
+                            {{ (app.request.get('page')) * itemsPerPage}} 
+
+                        {% endif %}
+                        di {{ allUsers | length}}
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div-->{# empty Twig template #}

@@ -1,0 +1,7 @@
+codegen_user:
+    resource: "@CodegenUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+homepage:
+    pattern:   /
+    defaults:  { _controller: CodegenUserBundle:Default:login }

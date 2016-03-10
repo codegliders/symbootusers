@@ -1,0 +1,33 @@
+
+<div  style="display:table">
+    
+        <div style="display: table-row;padding-bottom: 10px">
+            <div style="display: table-cell;padding-left:20px;"> <strong>Nome</strong></div>
+            <div style="display: table-cell;padding-left:20px;"> <strong>Cognome</strong></div>
+            <div style="display: table-cell;padding-left:30px;">  
+                <strong> Attivo</strong>
+            </div>
+        </div>
+    <div style="height:8px;width:100%"></div>
+    
+    {% for key, user in users %}
+        <div style="display: table-row;border-bottom: 1px solid #333">
+            
+            <div style="display: table-cell;padding-left:20px;"> {{user.firstname}}</div>
+            <div style="display: table-cell;padding-left:20px;"> {{user.lastname}}</div>
+            <div style="display: table-cell;padding-left:30px;">  
+                {% if (user.isActive==1)%}
+
+                    <span class="glyphicon glyphicon-exclamation-sign blue"></span>
+
+                {% else %}
+                    <span class="glyphicon glyphicon-exclamation-sign wrnred"></span>
+                {% endif%}
+            </div>
+             
+        </div>
+          
+            
+    {% endfor%}
+      
+</div>

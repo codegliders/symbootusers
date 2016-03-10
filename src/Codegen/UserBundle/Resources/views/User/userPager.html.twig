@@ -1,0 +1,41 @@
+ <!--div style="display:table-row">
+            <div style="float:left;margin:20px">
+
+                <div style="float:left;margin:10px;">Visualizza </div>
+                <div style="float:left;">{{ form_widget(form.numRecords) }} </div>
+                <div style="float:left;margin:10px;">record per pagina ..</div>
+
+            </div-->    
+
+            <div style="float:left">
+                <ul class="pagination">
+                    <li><a href="1">&laquo;</a></li>
+                        {% for i in 0..(numPages-1) %}
+                            {%  if    app.request.get('page') ==(i+1)%}
+                            <li class="active"><a href="{{i+1}}">{{ i+1 }}</a></li>
+                            {% else %} 
+                            <li ><a href="{{i+1}}">{{ i+1 }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    <li><a href="{{((( allUsers | length) / itemsPerPage)) | number_format(0)}}">&raquo;</a></li>
+                </ul>
+            </div>
+
+            <div style="float:left;margin-left:20px;padding-top:10px;"> 
+                Record {% if allUsers | length <  ((app.request.get('page')-1) * itemsPerPage) %}
+                {{ allUsers | length}}
+
+                {% else %}
+
+                    {{ ((app.request.get('page')-1) * itemsPerPage +1)  }} 
+                    {% endif%}
+                        - 
+                        {% if allUsers | length <  ((app.request.get('page')) * itemsPerPage) %}
+                            {{ allUsers | length }}
+                        {% else %}
+                            {{ (app.request.get('page')) * itemsPerPage}} 
+
+                        {% endif %}
+                        di {{ allUsers | length}}
+                    </div>
+                <!--/div-->

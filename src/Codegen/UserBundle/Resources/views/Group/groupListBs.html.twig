@@ -1,0 +1,345 @@
+{% extends '::bsbase.html.twig' %}
+
+{% block title %}Code Gliders Lab - Elenco utenti {% endblock %}
+{% block stylesheets %}
+
+    <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />
+
+    <link href="{{ asset('plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/bootstrap-multiselect/css/bootstrap-multiselect.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+
+    <link href="{{ asset('plugins/jquery-ui-custom/jquery-ui.css') }}" type="text/css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('plugins/jquery-2.1.1.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}" ></script>
+
+    <script type="text/javascript" src="{{ asset('plugins/jquery-ui-custom/jquery-ui.js') }}" ></script>
+
+
+
+
+    <!-- PAGE-SPECIFIC JAVASCRIPT INCLUSION-->
+    {% include "CodegenUserBundle:Group:groupListBs.js.twig" %}
+    <!-- END PAGE-SPECIFIC JAVASCRIPT INCLUSION-->
+
+{% endblock %}
+
+{% block body %}
+
+
+    <!--view modal-->
+
+    <div class="modal fade bs-example-modal-sm" id="viewModal">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-list-alt blue"> </span>&nbsp;&nbsp;Visualizza Gruppo</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div id="groupUsersContainer">
+
+                        <div style="float:left">
+                            <div class="form-group">
+
+                                <label> Nome </label>
+                                <div class="well">
+                                    <div id="viewGroupName"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div style="float:left;padding-left: 10px;">
+                            <div class="form-group">
+                                <label> Descrizione</label>
+                                <div class="well">
+                                    <div id="viewGroupDesc"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div style="float:left;padding-left: 10px;">
+                            <div class="form-group">
+
+                                <label> Livello di accesso </label>
+
+                                <div class="well">
+                                    <div style="" ><span id="viewAccessLevel" class="badge" style="background-color:#428bca;margin-left:20px;"></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!-- collapsable accordion for password change -->
+                    <div style="clear:both;height:10px;"></div>
+                    <div class="panel-group" id="accordion">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseGroupUsers">
+                                        Utenti associati
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseGroupUsers" class="panel-collapse collapse ">
+                                <div class="panel-body" id="assocUsersList">
+                                    Nessun utente associato
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end collapsable accordion for password change -->
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Chiudi</button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <!--end view modal-->
+
+
+
+
+    <!--add modal-->
+
+    <div class="modal fade bs-example-modal-sm" id="addModal">
+        <div class="modal-dialog modal-sm">
+            {{form_start(formadd)}}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <span class="glyphicon glyphicon-list-alt blue">
+
+                        </span>
+                        &nbsp;&nbsp;Aggiungi gruppo</h4>
+                </div>
+                <div class="modal-body" style="">
+
+                    <div class="form-group">
+                        <label> Nome</label>
+                        {{ form_widget(formadd.name) }} {{ form_errors(formadd.name) }}
+                    </div>
+                    <div class="form-group">
+                        <label> Descrizione</label>
+                        {{ form_widget(formadd.description) }} {{ form_errors(formadd.description) }}
+                    </div>
+                    <div class="form-group">
+                        <label>  Livello di accesso</label>
+                        {{ form_widget(formadd.accessLevel) }}{{ form_errors(formadd.accessLevel) }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    {{ form_widget(formadd.cancel) }} 
+                    {{ form_widget(formadd.save) }} 
+
+                </div>
+
+            </div>
+            {{form_end(formadd)}}
+        </div>
+    </div>
+
+    <!--end add modal-->
+
+
+    <!--edit modal-->
+
+    <div class="modal fade bs-example-modal-sm" id="editModal">
+        <!--div class="modal-dialog modal-sm">
+        {{form_start(formedit)}}
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal">
+                               <span aria-hidden="true">&times;</span>
+                               <span class="sr-only">Close</span>
+                           </button>
+                           <h4 class="modal-title" id="myModalLabel">
+                               <span class="glyphicon glyphicon-list-alt blue">
+       
+                               </span>
+                               &nbsp;&nbsp;Modifica gruppo</h4>
+                       </div>
+                       <div class="modal-body" style="">
+       
+                                   <div class="form-group">
+                                       <label> Nome</label>
+        {{ form_widget(formedit.name) }} {{ form_errors(formedit.name) }}
+    </div>
+    <div class="form-group">
+        <label> Descrizione</label>
+        {{ form_widget(formedit.description) }} {{ form_errors(formedit.description) }}
+    </div>
+    <div class="form-group">
+        <label> Livello di accesso</label>
+        {{ form_widget(formedit.accessLevel) }}{{ form_errors(formedit.accessLevel) }}
+    </div>
+</div>
+<div class="modal-footer">
+        {{ form_widget(formedit.cancel) }} 
+        {{ form_widget(formedit.save,{'label': 'Modifica gruppo'}  ) }} 
+
+    </div>
+
+</div>
+        {{form_end(formadd)}}
+</div-->
+    </div>
+
+    <!--end edit modal-->
+
+    <!--delete modal-->
+    <div class="modal fade" id="delGroupModal">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Chiudi</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-list-alt wrnred"> </span>&nbsp;&nbsp;Elimina Gruppo</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-danger ">
+                        <!--span class="glyphicon glyphicon-warning-sign danger"></span-->
+                        <strong>Attenzione!</strong>
+                        <br/>
+                        <span id="delSureStart">Sei sicuro di voler eliminare il gruppo</span> 
+                                
+                        <strong id="delName"></strong> 
+                                
+                                <span id="delSureEnd">?</span>
+                              
+                        
+                        <!-- collapsable accordion for password change -->
+                    <div style="clear:both;height:10px;"></div>
+                    <div class="panel-group" id="usersDelAccordion">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#usersDelAccordion" href="#collapseGroupUsersDel">
+                                        Utenti associati
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseGroupUsersDel" class="panel-collapse collapse ">
+                                <div class="panel-body" id="assocUsersDelList">
+                                    Nessun utente associato
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end collapsable accordion group users -->
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnDelGroup" class="btn btn-danger" data-dismiss="modal">
+                        Elimina gruppo
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <!--end delete modal-->
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#" role="tab" data-toggle="tab">Code Gliders Lab: Gruppi</a></li>
+
+    </ul>
+    <div id="table-container" >
+
+        <div style="clear:both;">
+            <!--div id="loading" style="display:none;   display: table;padding-top: 60px;
+                 margin: 0 auto;"><span class="glyphicon glyphicon-refresh blue"></span>&nbsp;&nbsp;Loading...</div-->
+
+            <table class="table table-hover" >
+                <thead>
+                    <tr>
+                        <th>#
+                            <span title="Ordina colonna"  id="btnOrderidMinus" class="glyphicon glyphicon-chevron-down blue"></span>
+                        </th>
+                        <th>Nome &nbsp;
+                            <span title="Ordina colonna"  id="btnOrdernameMinus" class="glyphicon glyphicon-minus blue"></span>
+                        </th>
+                        <th>Descrizione &nbsp;
+                            <span title="Ordina colonna"  id="btnOrderdescriptionMinus" class="glyphicon glyphicon-minus blue"></span>
+                        </th>
+                        <th>Livello accesso &nbsp;
+                            <span title="Ordine ascendente" id="btnOrderaccessLevelUp" class="glyphicon glyphicon-minus blue"></span>
+                        </th>
+
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody >
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div style="width:100%;clear:both">
+        <div style="margin:0 auto;width:300px;" id="txtSearchString"></div>
+    </div>
+
+    <div id="bar-container">
+
+        <div style="float:left" id="pager-container"> 
+
+        </div>
+        <div style="float:right;margin:20px;"> 
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+                <span class="glyphicon glyphicon-list-alt"> </span>&nbsp;  Aggiungi gruppo
+            </button>
+        </div>
+        <div style="float:right;margin-top:20px;">
+
+            <div style="float:right;width:160px;"> <div class="input-group">
+                    <input type="text" id="txtSearch" class="form-control" placeholder="Cerca...">
+                    <span class="input-group-btn">
+
+                        <button type="button" id="btnSearch" class="btn btn-primary" title="Cerca" >&nbsp;
+                            <span id="glSearch" class="glyphicon glyphicon-search"> </span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div style="float:right;"> 
+                <button type="button" id="btnFilter" class="btn btn-primary" title="Attiva/disattiva filtro" >&nbsp;<span id="glFilter" class="glyphicon glyphicon-filter"> </span></button>&nbsp;</div>
+
+
+        </div>
+
+    </div>
+
+
+
+{% endblock %}
+

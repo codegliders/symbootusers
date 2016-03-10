@@ -1,0 +1,7 @@
+parameters:
+#    codegen_user.example.class: Codegen\UserBundle\Example
+
+services:
+#    codegen_user.example:
+#        class: %codegen_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

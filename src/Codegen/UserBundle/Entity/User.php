@@ -1,0 +1,358 @@
+<?php
+
+// src/Acme/UserBundle/Entity/User.php
+
+namespace Codegen\UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use APY\DataGridBundle\Grid\Mapping as GRID;
+
+/**
+ * Codegen\UserBundle\Entity\User
+ *
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="Codegen\UserBundle\Entity\UserRepository")
+ * @GRID\Source(columns="role.description")
+ */
+class User implements UserInterface, \Serializable {
+
+    /**
+     * @ORM\Column(type="integer") 
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=false)
+     * 
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=false)
+     * 
+     */
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=false)
+     * 
+     */
+    private $image;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
+     * 
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(type="string", length=64, unique=true)
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    public $isActive;
+
+    /**
+     *
+     * @var type 
+     * @ORM\ManyToOne(targetEntity="Codegen\UserBundle\Entity\Role")
+     */
+    private $role;
+
+    /**
+     *
+     * @var type 
+     * @ORM\ManyToMany(targetEntity="Codegen\UserBundle\Entity\Group", mappedBy="users",cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="user_groups",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
+     * )
+     */
+    private $groups;
+
+    public function __construct() {
+        $this->isActive = true;
+        // may not be needed, see section on salt below
+        // $this->salt = md5(uniqid(null, true));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getId() {
+        return $this->id;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername() {
+        return $this->username;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setUsername($username) {
+        if (is_string($username)) {
+            $this->username = $username;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getEmail() {
+        return $this->email;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getIsActive() {
+        return $this->isActive;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setIsActive() {
+        $this->isActive = true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt() {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPassword() {
+        return $this->password;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setPassword($password) {
+        $this->password = $password;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles() {
+        return array('ROLE_USER');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials() {
+        
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize() {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+                // see section on salt below
+                // $this->salt,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized) {
+        list (
+                $this->id,
+                $this->username,
+                $this->password,
+                // see section on salt below
+                // $this->salt
+                ) = unserialize($serialized);
+    }
+
+    /**
+     * Set role
+     *
+     * @param \Codegen\UserBundle\Entity\Role $role
+     * @return User
+     */
+    public function setRole(\Codegen\UserBundle\Entity\Role $role = null) {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return \Codegen\UserBundle\Entity\User
+     */
+    public function getRole() {
+        return $this->role;
+    }
+
+    public function findByJoinedToRole() {
+
+        $query = $this->getEntityManager()
+                ->createQuery('
+            SELECT u.id,u.username,u.firstname,u.lastname,u.image,u.email,u.password,u.isActive,r.description
+                FROM CodegenUserBundle:User u
+                 JOIN u role r'
+        );
+
+        try {
+            return $query->getResults();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Set roledescription
+     *
+     * @param \Codegen\UserBundle\Entity\Role $roledescription
+     * @return User
+     */
+    public function setRoledescription(\Codegen\UserBundle\Entity\Role $roledescription = null) {
+        $this->roledescription = $roledescription;
+
+        return $this;
+    }
+
+    /**
+     * Get roledescription
+     *
+     * @return \Codegen\UserBundle\Entity\Role 
+     */
+    public function getRoledescription() {
+        return $this->roledescription;
+    }
+
+    /**
+     * Add groups
+     *
+     * @param \Codegen\UserBundle\Entity\Group $groups
+     * @return User
+     */
+    public function addGroup(\Codegen\UserBundle\Entity\Group $groups) {
+        $this->groups[] = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Remove groups
+     *
+     * @param \Codegen\UserBundle\Entity\Group $groups
+     */
+    public function removeGroup(\Codegen\UserBundle\Entity\Group $groups) {
+        $this->groups->removeElement($groups);
+    }
+
+    /**
+     * Get groups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGroups() {
+        return $this->groups;
+    }
+
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     * @return User
+     */
+    public function setFirstname($firstname) {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string 
+     */
+    public function getFirstname() {
+        return $this->firstname;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     * @return User
+     */
+    public function setLastname($lastname) {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string 
+     */
+    public function getLastname() {
+        return $this->lastname;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return User
+     */
+    public function setImage($image) {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string 
+     */
+    public function getImage() {
+        return $this->image;
+    }
+
+}

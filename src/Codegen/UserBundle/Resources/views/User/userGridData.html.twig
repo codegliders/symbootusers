@@ -1,0 +1,17 @@
+{% for user in users %}
+    <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.firstname}}</td>
+        <td>{{user.lastname}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.email}}</td>
+        <td>
+            <span title="Visualizza" id="viewRecord{{ user.id}}" class="glyphicon glyphicon-eye-open blue"></span>&nbsp;
+            <span title="Modifica" id="editRecord{{ user.id}}" class="glyphicon glyphicon-edit blue"></span>&nbsp;
+             <span title="Cambia password" id="pwdChange{{ user.id}}" class="glyphicon glyphicon-pencil"></span>&nbsp;
+            <span title="Elimina" id="deleteRecord{{ user.id}}"  class="glyphicon glyphicon-remove-circle blue del"></span>
+        </td>
+    </tr>
+{% endfor %}
+
+

@@ -1,0 +1,88 @@
+<!doctype HTML!>
+
+<html>
+    <head>
+        <title>Code Gliders Lab</title>
+        {% block stylesheets %}
+            <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+
+        {% endblock %}
+        {% block javascripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}" ></script>
+        {% endblock %}
+    </head>
+    <body>
+
+        <div id="login-form-bs">
+            <div>
+            <div style="float:right">
+                <span class="header-subtitle-bs" style="padding-left:0px;font-size:22px;color:#000" >Code Gliders Lab&nbsp;&nbsp;</span>
+
+                <svg
+                    xmlns:svg="http://www.w3.org/2000/svg"
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="36.974159"
+                    width="32.056206"
+                    >
+                <g
+
+                    id="layer1"
+                    transform="translate(-17.355041,-86.298672)">
+                <path
+                    sodipodi:nodetypes="ccccccccccc"
+                    id="path2388"
+                    d="m 26.787743,86.30515 c 2.082923,2.045166 1.768544,3.591245 1.791186,6.066761 l 0.0715,7.817729 -10.145524,15.19782 c -2.455207,4.09337 -0.794263,8.09827 3.232742,7.86177 l 23.287163,0.0236 c 4.352817,-0.0183 5.942111,-4.05178 2.568848,-8.30187 L 37.96987,100.22743 37.788743,92.397182 c -0.02264,-2.475516 -0.365249,-4.015586 1.679917,-6.09851 l -12.680917,0.0065 z"
+                    style="fill:#3771c8;fill-opacity:1;stroke:none;stroke-width:8;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+                    inkscape:connector-curvature="0" />
+                </g>
+                </svg>
+            </div>
+            </div>
+      
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#home" role="tab" data-toggle="tab">Accesso utente</a></li>
+
+            </ul>
+            <div class="tab-content" style="border:1px solid #cccccc;border-top: 0px;padding:20px;"> 
+                <div class="tab-pane active" id="home">
+                    <form  action="{{ path('login_check')}}" method="post"> 
+                        <div >
+                            Username
+                        </div>
+                        <div><input class="form-control" type="text" name="_username"></div>
+                        <div >Password </div>
+                        <div><input type="password" class="form-control"  name="_password"></div>
+
+                        <div><input type="hidden" name="_target_path" value="bssplash" /></div>
+                        <div><br>
+                            <button type="submit" class="btn btn-primary" style="width:100%">Login</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+            <br>
+
+        </div>
+    </body>
+    <!--body style="background-color:#4F76A3;font-face:'Trebuchet'">
+        <div id="login-form">
+            <span class="header-subtitle" style="padding-left:0px;font-size:22px;" >Code Gliders Lab:: Login</span>
+        
+            <br>
+            <form  action="{{ path('login_check')}}" method="post"> 
+                <div style="color:#fff">
+                    Username: </div>
+                <div><input type="text" name="_username"></div>
+                <div style="color:#fff">Password: </div>
+                <div><input type="password" name="_password"></div>
+             
+                <div><input type="hidden" name="_target_path" value="userlist2" /></div>
+ <div><input type="submit" value="Submit"> </div>
+            </form>
+        </div>
+    </body-->
+</html>

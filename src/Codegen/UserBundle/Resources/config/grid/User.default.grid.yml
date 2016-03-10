@@ -1,0 +1,44 @@
+Codegen\UserBundle\Entity\User:
+    Source:
+        columns:
+            id: ~
+            username: ~
+            password: ~
+            email: ~
+            isActive: ~        
+        groupBy: ~
+        filterable: ~
+    Columns:
+        id:
+            filterable: false
+            visible: true
+            id: id
+            title: id
+        username:
+            filterable: true
+            visible: true
+            id: username
+            title: Nome Utente
+        password:
+            filterable: false
+            visible: false
+            id: password
+            title: Password
+        email:
+            filterable: true
+            visible: true
+            id: email
+            title: Email
+            
+        role.description:
+            filterable: true
+            visible: true
+            id: role.description
+            title: Ruolo
+            
+        isActive:
+            filterable: true
+            visible: true
+            id: isActive
+            title: Attivo
+        

@@ -1,0 +1,21 @@
+# src/Codegen/UserBundle/Resources/config/validation.yml
+Codegen\UserBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [email]
+            message: 'Indirizzo email utente è già presente nel sistema'
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: 
+            fields: [username]
+            message: 'Questo utente è già presente nel sistema'
+        
+     
+            
+    #properties:
+        #email:
+            #- Email: 
+                #message: L\'email "{{ value }}" non è un\'email valida.
+                #checkMX: true
+    
+        #isActive:
+        
+      

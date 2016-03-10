@@ -1,0 +1,34 @@
+Codegen\UserBundle\Entity\Group:
+    Source:
+        columns:
+            id: ~
+            name: ~
+            description: ~
+            accessLevel: ~        
+        groupBy: ~
+        filterable: ~
+    Columns:
+        id:
+            filterable: false
+            visible: true
+            id: id
+            title: id
+            
+        name:
+            filterable: true
+            visible: true
+            id: name
+            title: Nome Gruppo
+            
+        description:
+            filterable: true
+            visible: true
+            id: description
+            title: Descrizione Gruppo
+            
+        accessLevel:
+            filterable: true
+            visible: true
+            id: accessLevel
+            title: Livello di accesso
+       

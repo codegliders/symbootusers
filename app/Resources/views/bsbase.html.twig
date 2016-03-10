@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>{% block title %}CodeGliders Lab{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+
+        {% endblock %}
+        {% block javascripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}" ></script>
+        {% endblock %}
+        <link rel = "icon" type = "image/x-icon" href = "{{ asset('favicon.ico') }}" />
+
+
+
+        <style>
+            body {
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
+            .navbar {
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+
+    <body style="margin-top:0px;">
+
+        <!--modal for user data -->
+        <div class="modal fade" id="loggedUserModal">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-user blue" ></span>&nbsp;&nbsp;Utente</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- image name container div-->
+                        <div>
+                            <!-- image div-->
+                            <div style="margin-left:20px; ">
+                                <svg
+
+                                    xmlns:svg="http://www.w3.org/2000/svg"
+                                    xmlns="http://www.w3.org/2000/svg"
+
+                                    width="95.131676"
+                                    height="94.969971"
+                                    ><path
+                                    id="user-8-icon"
+                                    d="M 82.535567,71.608178 C 68.904004,68.463978 56.215226,65.710698 62.360465,54.124928 81.065873,18.859428 67.318636,-2.4789468e-6 47.566073,-2.4789468e-6 27.424217,-2.4789468e-6 14.015246,19.583298 32.771687,54.124928 c 6.329502,11.65642 -6.83656,14.4067 -20.175106,17.48325 -13.6260185,3.14236 -12.57795141,10.32665 -12.57795141,23.36179 H 41.572538 l 2.79069,-14.32842 h 6.405234 l 2.790694,14.32842 H 95.11305 c 0,-13.03537 1.04807,-20.21943 -12.577483,-23.36179 z m -32.626757,5.43776 h -4.614354 l -3.606931,-7.55583 h 11.866312 l -3.645027,7.55583 z"
+                                    style="fill:#3771c8;fill-opacity:1"
+                                    inkscape:connector-curvature="0" /></svg>
+                            </div>
+                            <!-- end image div-->
+                            <!-- user div-->
+                            <div style="margin-left:20px;padding-top:00px;">
+                 
+
+                                <!--h5>Utente:</h5-->
+                         
+
+                                    <h4>{{ app.user.firstname }} {{ app.user.lastname }}</h4>
+                             
+
+
+
+                            </div>
+                                     
+                        </div>
+                       <div style="clear:both;height:10px;"></div>
+                        <!-- collapsable accordion for password change -->
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseUserData">
+                                            Dati utente
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseUserData" class="panel-collapse collapse collapse">
+                                    <div class="panel-body">
+
+                                        <h5><strong>Nome login:</strong></h5> 
+
+                                        <h5>{{ app.user.username }}</h5>
+                                        <h5><strong>Email:</strong></</h5> 
+
+                                        <h5>{{ app.user.email }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseEditPwd">
+                                            Modifica Password
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseEditPwd" class="panel-collapse collapse collapse">
+                                    <div class="panel-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end collapsable accordion for password change -->
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Chiudi</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>          
+    <!--./ add modal-->
+
+    <div class="container" style="padding-top:0px;margin-top:0px">
+        <header class="page-header" style="height:70px">
+            <div style="height:40px;">
+                <div style="float:left">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="124.07207"
+                        height="70.216454">
+                    <g id="layer1"
+                       transform="translate(68.782946,-743.95767)">
+                    <path
+                        id="user-8-icon"
+                        d="m 46.09182,796.90148 c -9.953358,-2.32468 -19.21833,-4.36033 -14.731259,-12.92632 13.658131,-26.0737 3.620307,-40.01749 -10.802417,-40.01749 -14.7069804,0 -24.4978088,14.47899 -10.8024167,40.01749 4.6216107,8.61823 -4.9918528,10.65166 -14.7312587,12.92632 -9.9493106,2.32331 -9.1840436,7.63505 -9.1840436,17.27264 h 30.341419 l 2.037676,-10.59378 h 4.676911 l 2.037676,10.59378 h 30.341419 c 0,-9.63776 0.765267,-14.94933 -9.183706,-17.27264 z m -23.82308,4.02042 h -3.369264 l -2.633671,-5.58642 h 8.664425 l -2.66149,5.58642 z"
+                        style="fill:#3771c8;fill-opacity:1"
+                        />
+                    <path
+                        id="user-2-icon"
+                        d="m -6.6585814,800.78892 c -8.8496816,-1.94027 -19.6252326,-6.9487 -16.4504426,-13.46968 2.039012,3.21141 8.356961,5.0687 13.2782594,2.2932 -14.1656784,-3.43412 6.9634392,-27.01131 -11.5503474,-40.22756 -6.756792,-4.84833 -16.547249,-4.90375 -23.197684,0 -18.513786,13.21625 2.615338,36.79344 -11.550347,40.22756 4.921298,2.7755 11.248806,0.83473 13.278266,-2.2932 3.174964,6.52165 -7.609979,11.53142 -16.450449,13.46968 -10.261279,2.24962 -9.467364,8.68545 -9.467364,13.3852 H 2.8084354 c 0,-4.69958 0.7944362,-11.13525 -9.4670168,-13.3852 z"
+                        style="fill:#3771c8;fill-opacity:1"
+                        inkscape:connector-curvature="0" />
+                    </g>
+                    </svg>
+                </div>
+                <div style="float:right">
+                    <div style="float:left;height:60px;padding-top:25px;">
+                        <h3 style="font-style:normal"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Code Gliders Lab&nbsp;&nbsp;&nbsp;&nbsp; </h3> 
+                    </div>
+                    <div style="float:right;height:40px;padding-top:30px;padding-right:20px;">
+
+                        <svg
+                            xmlns:svg="http://www.w3.org/2000/svg"
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="36.974159"
+                            width="32.056206"
+                            >
+                        <g
+                            id="layer1"
+                            transform="translate(-17.355041,-86.298672)">
+                        <path
+                            sodipodi:nodetypes="ccccccccccc"
+                            id="path2388"
+                            d="m 26.787743,86.30515 c 2.082923,2.045166 1.768544,3.591245 1.791186,6.066761 l 0.0715,7.817729 -10.145524,15.19782 c -2.455207,4.09337 -0.794263,8.09827 3.232742,7.86177 l 23.287163,0.0236 c 4.352817,-0.0183 5.942111,-4.05178 2.568848,-8.30187 L 37.96987,100.22743 37.788743,92.397182 c -0.02264,-2.475516 -0.365249,-4.015586 1.679917,-6.09851 l -12.680917,0.0065 z"
+                            style="fill:#3771c8;fill-opacity:1;stroke:none;stroke-width:8;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+                            inkscape:connector-curvature="0" />
+                        </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ path('bssplash') }}"><span class="glyphicon glyphicon-home blue"></span> &nbsp;&nbsp;Gestione utenti e ruoli</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ path('userlist2b') }}">Utenti</a></li>
+
+                    
+                          <li ><a href="{{ path('grouplistbs') }}">Gruppi </a></li>
+
+                      
+                         <li ><a href="{{ path('rolelistbs') }}">Ruoli</a></li>
+                        <!--li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Azioni <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+
+                                <li><a href="{{ path('adduser') }}">Aggiungi utente</a></li>
+
+
+                            </ul>
+                        </li-->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Altre implementazioni <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                               
+                                <li class="active"><a href="{{ path('userlist3') ~ '/1/10' }}">Utenti (no Ajax)</a></li>
+                                 <li class="active"><a href="{{ path('user_splash') }}">Versione  APY Datagrids</a></li>
+
+
+                                <li class="divider"></li>
+                                <li class="dropdown-header">About</li>
+                                <li><a href="http://www.codegeneration.it">Credits</a></li>
+                                <!--li><a href="#">About</a></li-->
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="#" 
+                                              data-toggle="modal"
+                                              data-target="#loggedUserModal"><span class="glyphicon glyphicon-user"></span> Utente: {{ app.user.firstname }} {{ app.user.lastname }}</a></li>
+                        <li><a href="{{ path('logout') }}"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
+
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+        </div>
+    </div><!--/.container-->
+    <div class="container">
+        {% block body %}
+
+
+
+        {% endblock %}
+    </div>
+
+
+
+
+
+</body>
+</html>

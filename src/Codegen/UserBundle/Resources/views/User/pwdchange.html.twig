@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}
+    Aggiungi utente
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <div class="form-div">
+        {#{ form(form) }#}
+        <div class="form-div">
+            <br>
+            <div class="form-title">
+                Cambio password
+            </div>
+            <br>
+            {{ form_start (form) }}
+
+            <div class="form-odd">
+                Password attuale
+                {{ form_widget(form.currentpassword) }}
+            </div>
+            <div class="clear"></div>
+            <div class="form-odd">
+                {{ form_widget(form.password) }}
+            </div>
+            <div class="clear"></div>
+            <div class="form-odd">
+                {{ form_widget(form.cancel) }}
+                {{ form_widget(form.save) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+
+    {% endblock %}

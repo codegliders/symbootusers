@@ -1,0 +1,443 @@
+<script type="text/javascript">
+
+        $(function() {
+
+        var context = this;
+                this.numrecords = 10;
+                this.numrecindex = 1;
+                //managing search
+                this.searchString = null;
+                this.searchFilter = true;
+                this.searchField = null;
+                this.orderField = null;
+                this.orderSort = null;
+            
+                //loading icon
+                var loading = $("#loading");
+                $(document).ajaxStart(function() {
+        //loading.show();
+        });
+                $(document).ajaxStop(function() {
+       
+        //loading.hide();
+        });
+                // get first grid
+                $.ajax({
+                url: "{{path ('groupajaxlistdata')}}?numberOfRecords=" + 10 + '&page=' + 1,
+                        context: document.body,
+                        success: (function(data) {
+
+                        $('table.table tbody').html(data);
+                        }),
+                });
+                var numrecindex = 0;
+
+                $.ajax({
+                url: "{{path ('groupgridpager')}}?numberOfRecords=" + 10 + '&numRecIndex=' + 1 + '&page=' + 1,
+                        context: document.body,
+                        success: (function(data) {
+
+                        $('#pager-container').html(data);
+                        })
+
+                });
+                $(document).on('change', '#form_numRecords', (function() {
+
+        var numrec = $(this).val();
+                var numrecindex = $(this).find(":selected").index();
+                context.numrecindex = $(this).find(":selected").index();
+                $.ajax({
+                url: "{{path ('groupajaxlistdata')}}?numberOfRecords=" + $(this).val() + '&numRecIndex=' + numrecindex + '&searchField=' + context.searchField + '&searchString=' + context.searchString,
+                        context: document.body
+                }).done(function(data) {
+
+        $('table.table tbody').html(data);
+        });
+                //load pager
+                $.ajax({
+                url: "{{path ('groupgridpager')}}?numberOfRecords=" + $(this).val() + '&numRecIndex=' + numrecindex + '&page=' + 1 + '&searchField=' + context.searchField + '&searchString=' + context.searchString,
+                        context: this,
+                        success: (function(data) {
+
+
+                        $('#pager-container').html(data);
+                        })
+                });
+        }));
+                $(document).on('click', '.pages', (function() {
+
+
+        context.numrecords = $("#form_numRecords").val();
+                var pagenum = $(this).attr('id');
+                pagenum = pagenum.replace('pagelist', '');
+              
+                if (pagenum == 0) {
+        pagenum = 1;
+        }
+
+
+        var numrec = $("#form_numRecords").val();
+                var numrecindex = $("#form_numRecords").find(":selected").index();
+                $('#paginationList li').attr('class', 'pagesli');
+                $('#pagelist' + (pagenum)).attr('class', 'active');
+                //calculate num records
+                var allrec ={{numGroups}} ;
+                var recfirst = 0;
+                if (allrec < ((pagenum - 1) * numrec)) {
+        recfirst ={{numGroups}}
+        } else {
+        recfirst = (((pagenum - 1) * numrec) + 1);
+        }
+
+        var reclast = 0;
+                if (allrec < ((pagenum) * numrec)) {
+        reclast ={{numGroups}}
+        } else {
+        reclast = (((pagenum) * numrec));
+        }
+
+        var recstring = 'Record ' + recfirst + ' - ' + reclast + ' di ' + allrec;
+                $('#recfirst').text(recstring);
+                $('#recinit').text('');
+                $.ajax({
+                url: "{{path ('groupajaxlistdata')}}?numberOfRecords=" + numrec + '&page=' + pagenum + '&searchField=' + context.searchField + '&searchString=' + context.searchString,
+                        context: document.body,
+                        success: (function(data) {
+
+                        $('table.table tbody').html(data);
+                        }),
+                });
+        }));
+                //action for view
+                $(document).on('click', '.glyphicon.glyphicon-eye-open.blue', (function() {
+        var recid = $(this).attr('id');
+                recid = recid.replace('viewRecord', '');
+                var id = $(this).data('id');
+              
+        {% for key, group in groups %}
+                    if (parseInt({{ group.id }}) == parseInt(id)) {
+           
+                  
+                    $('#viewGroupName').html('{{ group.name|e }}');
+                    $('#viewGroupDesc').html('{{ group.description|e }}');
+                    $('#viewAccessLevel').html('{{ group.accessLevel|e }}');
+            
+            }
+            
+             // get edit form
+                    $.ajax({
+                    url: "{{path ('groupassocusers')}}?id=" + id,
+                            context: this,
+                            success: (function(data) {
+                            $('#assocUsersList').html(data);
+                                
+                            }),
+                    });
+        {% endfor %}
+
+
+            }));
+                  //action for edit
+            $(document).on('click', '.glyphicon.glyphicon-edit.blue', (function() {
+               
+                $('#editModal').html();
+                    var recid = $(this).attr('id');
+                    recid = recid.replace('editRecord', '');
+                    var id=$(this).data('id');
+
+                    // get edit form
+                    $.ajax({
+                    url: "{{path ('groupedit')}}?id=" + id,
+                            context: this,
+                            success: (function(data) {
+                            $('#editModal').html(data);
+                                
+                            }),
+                    });
+            })); 
+
+         
+            //action for delete
+            $(document).on('click', '.glyphicon.glyphicon-remove-circle.blue', (function() {
+
+            var id = $(this).data('id');
+                        {% for key, group in groups %}
+                    if (parseInt({{ group.id }}) == parseInt(id)) {
+
+            $('#delName').html('{{ group.description|e }} ');
+            $('#btnDelGroup').attr('data-id',id);
+              var recid = $(this).attr('id');
+                recid = recid.replace('viewRecord', '');
+                var id = $(this).data('id');
+              
+        {% for key, group in groups %}
+                    if (parseInt({{ group.id }}) == parseInt(id)) {
+           
+                  
+                    $('#viewGroupName').html('{{ group.name|e }}');
+                    $('#viewGroupDesc').html('{{ group.description|e }}');
+                    $('#viewAccessLevel').html('{{ group.accessLevel|e }}');
+            
+            }
+             {% endfor %}
+             // get users list
+                    $.ajax({
+                    url: "{{path ('groupassocusers')}}?id=" + id,
+                            context: this,
+                            success: (function(data) {
+                                $('#assocUsersDelList').html(data);
+                                  
+                 // /Create jQuery object from the response HTML.
+                var $response=$(data);
+
+                //Query the jQuery object for the values
+   
+                usersCount = $(data).find('#usersCount').val();
+                //alert(usersCount);
+                
+                if(usersCount>0){
+                    $('#delSureStart').html('Impossibile eliminare il gruppo ');
+                     $('#delSureEnd').html('. Il gruppo è associato ad uno o più utenti ');
+                     $('#btnDelGroup').hide();
+                     $('#usersDelAccordion').show();
+                    
+                } else {
+                    
+                      $('#delSureStart').html('Sei sicuro di voler eliminare il gruppo ');
+                     $('#delSureEnd').html(' ?');
+                     $('#btnDelGroup').show();
+                       $('#usersDelAccordion').hide();
+                }
+                                
+                            }),
+                    });
+       
+           // alert($('#delGroupModal').attr('data-id'));
+            }
+        {% endfor %}
+
+
+            }));
+            
+            //action for order asc
+            $(document).on('click', '.glyphicon.glyphicon-chevron-up.blue', (function() {
+                    var id = $(this).attr('id');
+                    fieldname = id.replace('btnOrder', '');
+                    fieldname = fieldname.replace('Down', '');
+                    fieldname = fieldname.replace('Minus', '');
+                    fieldname = fieldname.replace('Up', '');
+                    //FIELD NAMES MUST BE IN THE SAME CASE OF TABLE
+                    //  fieldname = fieldname.toLowerCase();
+
+
+                    context.numrecindex = $("#form_numRecords").find(":selected").index();
+                    context.numrecords = $("#form_numRecords").val();
+                    context.orderField = fieldname;
+                 
+
+                    //ajax call for data
+                    $.ajax({
+                    url: "{{path ('groupajaxlistdata')}}?numberOfRecords=" + context.numrecords + '&numRecIndex=' + context.numrecindex + '&orderField=' + context.orderField + '&orderSort=ASC' + '&searchString=' + context.searchString + '&searchField=' + context.searchField,
+                            context: this
+                    }).done(function(data) {
+
+                        $('table.table tbody').html(data);
+                        $('.glyphicon.glyphicon-chevron-down.blue').attr('class', 'glyphicon glyphicon-minus blue');
+                        $('.glyphicon.glyphicon-chevron-up.blue').attr('class', 'glyphicon glyphicon-minus blue');
+                        $(this).attr('class', 'glyphicon glyphicon-chevron-down blue');
+                       
+                    });
+                    
+                    
+                        //ajax call for pager
+                    
+                      $.ajax({
+                    url: "{{path ('groupgridpager')}}?numberOfRecords=" + 10 + '&numRecIndex=' + 1 + '&page=' + 1 + '&searchString=' + context.searchString + '&searchField=' + context.searchField,
+                            context: document.body,
+                            success: (function(data) {
+
+                            $('#pager-container').html(data);
+                            })
+
+                    });
+            }));
+           
+            //action for order desc
+           $(document).on('click', '.glyphicon.glyphicon-chevron-down.blue', (function() {
+            var id = $(this).attr('id');
+                    fieldname = id.replace('btnOrder', '');
+                    fieldname = fieldname.replace('Down', '');
+                    fieldname = fieldname.replace('Minus', '');
+                    fieldname = fieldname.replace('Up', '');
+                    //FIELD NAMES MUST BE IN THE SAME CASE OF TABLE
+                    //ENABLE FOLLOWING LINE FOR A DIFFERENT BEHAVIOR
+                    //MEANS FIELDS NAMES TO BE MANAGED BY AN ARRAY IN CONTEXT
+                    //fieldname = fieldname.toLowerCase();
+                    context.orderField = fieldname;
+                    context.numrecindex = $("#form_numRecords").find(":selected").index();
+                    context.numrecords = $("#form_numRecords").val();
+                    
+                    //ajax call for data
+                    $.ajax({
+                    url: "{{path ('groupajaxlistdata')}}?numberOfRecords=" + context.numrecords + '&numRecIndex=' + context.numrecindex + '&orderField=' + context.orderField + '&orderSort=DESC' + '&searchString=' + context.searchString + '&searchField=' + context.searchField,
+                            context: this
+                    }).done(function(data) {
+
+                            $('table.table tbody').html(data);
+                            // alert('Ordina secondo ascendente');
+                            $('.glyphicon.glyphicon-chevron-up.blue').attr('class', 'glyphicon glyphicon-minus blue');
+                            $('.glyphicon.glyphicon-chevron-down.blue').attr('class', 'glyphicon glyphicon-minus blue');
+                            $(this).attr('class', 'glyphicon glyphicon-chevron-up blue');
+                    });
+                    
+                   
+                        //ajax call for pager
+                    
+                    $.ajax({
+                        url: "{{path ('groupgridpager')}}?numberOfRecords=" + 10 + '&numRecIndex=' + 1 + '&page=' + 1 + '&searchString=' + context.searchString + '&searchField=' + context.searchField,
+                            context: document.body,
+                            success: (function(data) {
+
+                            $('#pager-container').html(data);
+                            })
+
+                    });
+                    
+            }));
+            
+            //action for order minus
+            $(document).on('click', '.glyphicon.glyphicon-minus.blue', (function() {
+
+                    var id = $(this).attr('id');
+                    fieldname = id.replace('btnOrder', '');
+                    fieldname = fieldname.replace('Down', '');
+                    fieldname = fieldname.replace('Minus', '');
+                    fieldname = fieldname.replace('Up', '');
+                    // fieldname = fieldname.toLowerCase();
+                    context.numrecindex = $("#form_numRecords").find(":selected").index();
+                    context.numrecords = $("#form_numRecords").val();
+                    context.orderField = fieldname;
+                    
+                    //ajax call for data
+                    $.ajax({
+                    url: "{{path ('groupajaxlistdata')}}?numberOfRecords=" + context.numrecords + '&numRecIndex=' + context.numrecindex + '&orderField=' + context.orderField + '&orderSort=DESC' + '&searchString=' + context.searchString + '&searchField=' + context.searchField,
+                            context: this
+                    }).done(function(data) {
+
+                        $('table.table tbody').html(data);
+                          
+                            $('.glyphicon.glyphicon-chevron-down.blue').attr('class', 'glyphicon glyphicon-minus blue');
+                            $('.glyphicon.glyphicon-chevron-up.blue').attr('class', 'glyphicon glyphicon-minus blue');
+                            $(this).attr('class', 'glyphicon glyphicon-chevron-up blue');
+                    });
+                    
+                    //ajax call for pager
+                    
+                      $.ajax({
+                    url: "{{path ('groupgridpager')}}?numberOfRecords=" + 10 + '&numRecIndex=' + 1 + '&page=' + 1 + '&searchString=' + context.searchString + '&searchField=' + context.searchField,
+                            context: document.body,
+                            success: (function(data) {
+
+                            $('#pager-container').html(data);
+                            })
+
+                    });
+                    
+            }));
+                   
+
+
+                    //manage filter 
+                    $(document).on('click', '#btnFilter', (function(event, ui) {
+
+            if (context.searchFilter == false) {
+            context.searchFilter = true;
+                    $(this).attr("class", 'btn btn-primary');
+                    $('#txtSearchString').html('');
+            } else {
+            context.searchFilter = false;
+                    $('#txtSearchString').html('');
+                    $(this).attr("class", 'btn btn-default');
+                    context.searchString = null;
+                    context.searchField = null;
+                    $.ajax({
+                    url: "{{path ('groupajaxlistdata')}}?numberOfRecords=" + 10 + '&page=' + 1 + '&searchString=' + context.searchString + '&searchField=' + context.searchField,
+                            context: document.body,
+                            success: (function(data) {
+
+                            $('table.table tbody').html(data);
+                            }),
+                    });
+                    $.ajax({
+                    url: "{{path ('groupgridpager')}}?numberOfRecords=" + 10 + '&numRecIndex=' + 1 + '&page=' + 1 + '&searchString=' + context.searchString + '&searchField=' + context.searchField,
+                            context: document.body,
+                            success: (function(data) {
+
+                            $('#pager-container').html(data);
+                            })
+
+                    });
+            }
+
+            }))
+
+                    //manage search button click event
+                    $(document).on('click', '#btnSearch', (function(event, ui) {
+
+            context.searchString = $('#txtSearch').val();
+                    if (context.searchString !== null) {
+            if (context.searchFilter == true) {
+            context.searchField = 'name';
+                    $.ajax({
+                    url: "{{path ('groupajaxlistdata')}}?numberOfRecords=" + 10 + '&page=' + 1 + '&searchString=' + context.searchString + '&searchField=' + context.searchField,
+                            context: document.body,
+                            success: (function(data) {
+
+                            $('table.table tbody').html(data);
+                            }),
+                    });
+                    $.ajax({
+                    url: "{{path ('groupgridpager')}}?numberOfRecords=" + 10 + '&numRecIndex=' + 1 + '&page=' + 1 + '&searchString=' + context.searchString + '&searchField=' + context.searchField,
+                            context: document.body,
+                            success: (function(data) {
+
+                            $('#pager-container').html(data);
+                            })
+
+                    });
+                    $('#txtSearchString').html('Risultati per: <i>' + context.searchString) + '</i>';
+            } else {
+            var alrt = '<div class="alert alert-warning alert-dismissible" role="alert">';
+                    alrt = alrt + '<button type="button" class="close" data-dismiss="alert">';
+                    alrt = alrt + '<span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>';
+                    alrt = alrt + '<strong>Attenzione!</strong> <br>Attivare il filtro per effettuare le ricerche';
+                    alrt = alrt + '</div>';
+                    $('#txtSearchString').html(alrt);
+            }
+            $('#txtSearchString').html();
+            } else {
+
+            }
+
+         
+            }));
+            
+            
+            //delete group button click
+            $(document).on('click', '#btnDelGroup', (function(event, ui) {
+            
+                //window.location='{{ path ('groupdelete')}}' +  '?id=' + $(this).data('id');
+             //alert($(this).data('id'));
+             
+            
+            }));
+            
+            
+        }); 
+            //end doc ready
+
+
+
+
+        </script>
+    

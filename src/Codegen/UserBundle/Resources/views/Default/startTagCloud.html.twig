@@ -1,0 +1,125 @@
+<!doctype HTML!>
+
+<html>
+    <head>
+        <title>Code Gliders Lab</title>  
+        {% block stylesheets %}
+
+            <link href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />
+
+        {% endblock %}
+        {% block javascripts %}
+            <script type="text/javascript" src="{{ asset('plugins/jquery-2.1.1.js') }}"></script>
+
+            <script src="{{ asset('plugins/tagcanvas/jquery.tagcanvas.min.js') }}" ></script>
+            <script src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}" ></script>
+            <script>
+                $(function() {
+
+                    if (!$('#myCanvas').tagcanvas({
+                        textColour: null,
+                        textHeight: 26,
+                        outlineColour: '#ddd',
+                        reverse: true,
+                        depth: 0.8,
+                        maxSpeed: 0.05,
+                        textFont: 'Impact,"Arial Black",sans-serif',
+                        zoom: '0.8'
+                {# textFont: 'Impact,"Arial Black",sans-serif',
+                 maxSpeed: '0.1',
+                 wheelZoom: false,
+                 zoom: '0.8',
+                 weight: true,
+                 outlineColour: '#428bca',#}
+                                })) {
+                                    // TagCanvas failed to load
+                                    $('#myCanvasContainer').hide();
+                                }
+                            });
+            </script>
+        {% endblock %}
+    </head>
+    <body>    
+
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!--div>
+                        <div style="float:left;padding-top:8px;padding-right:20px"> <img src="{{ asset ('images/labicon01.png')}}" style="height:40px"/></div>
+                         <div style="float:left;padding-top: 15px;padding-left:12px"--> <a class="navbar-brand" href="#">Code Gliders Lab</a><!--/div-->
+                    <!--/div-->
+
+
+                </div>
+
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+
+                        <li><a href="{{path ('login')}}">Symfony 2: Gestione utenti e gruppi </a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{path ('login')}}"><button class="btn btn-default"><span class="glyphicon glyphicon-log-in blue"></span> &nbsp;Login</button></a></li>
+
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+
+
+        <div class="container">
+
+
+            <div id="myCanvasContainer" style="margin:auto;position:relative;width:600px;overflow:hidden;">
+                <canvas width="600" height="600" id="myCanvas" style="overflow: visible;">
+                    <p>Anything in here will be replaced on browsers that support the canvas element</p>
+                    <ul>
+                        <li><a href="{{path('login')}}" style="color:#428bca; font-size:40px;" target="_new">Symfony 2</a></li>
+                        <li><a href="{{path('login')}}"  style="color:#888; font-size:30px;" target="_new_a">MVC</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:30px;" target="_new_b">PHP</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:30px;" target="_new_c">Git</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:30px;" target="_new_d">Unix</a></li>
+                        <li><a href="{{path('login')}}"  style="color:#428bca; font-size:40px;" target="_new_e">Ajax</a></li>
+                        <li><a href="{{path('login')}}"  style="color:#888; font-size:30px;" target="_new_f">HTTP Kernel</a></li>
+                        <li><a href="{{path('login')}}"  style="color:#888; font-size:30px;" target="_new_f">Routing</a></li>
+                        <li><a href="{{path('login')}}"  style="color:#888; font-size:30px;" target="_new_f">Console</a></li>
+
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:25px;" target="_new_g">Json</a></li>
+                        <li><a href="{{path('login')}}"  style="color:#428bca; font-size:40px;" target="_new_h">jQuery</a></li>
+                        <li><a href="{{path('login')}}"  style="color:#428bca; font-size:40px;" target="_new_i">HTML5</a></li>
+                        <li><a href="http://www.codegeneration.it/" style="color:#428bca; font-size:25px;" target="_new_l">Code Gliders Lab</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:25px;" target="_new_m">Twig</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:30px;" target="_new_n">HTTP Foundation</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:25px;" target="_new_o">YAML</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:30px;" target="_new_p">PostgreSql</a></li>
+                        <li><a href="{{path('login')}}"  style="color:#888; font-size:30px;" target="_new_q">Doctrine ORM</a></li>
+                        <li><a href="http://it.wikipedia.org/wiki/JavaScript" style="color:#888; font-size:30px;" target="_new_r">JavaScript</a></li>
+                        <li><a href="http://it.wikipedia.org/wiki/Responsive_Web_Design" style="color:#888; font-size:30px;" target="_new_s">Responsive</a></li>
+                        <li><a href="http://it.wikipedia.org/wiki/User_Experience" style="color:#888; font-size:30px;" target="_new_t">UX Design</a></li>
+                        <li><a href="http://www.w3.org/Style/CSS/" style="color:#888; font-size:30px;" target="_new_u">CSS</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:30px;" target="_new_v">SOAP</a></li>
+                        <li><a href="{{path('login')}}"  style="color:#428bca; font-size:40px;"  target="_new_w">Apache</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:30px;" target="_new_y">Mysql</a></li>
+                        <li><!--a href="{{path('login')}}" style="color:#888; font-size:30px;" target="_new_z">AngularJS</a></li-->
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:30px;" target="_new_2">Bootstrap</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:25px;" target="_new_3">Eclipse</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:30px;" target="_new_4">NetBeans</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:30px;" target="_new_10">SVG</a></li>
+                        <li><a href="{{path('login')}}" style="color:#888; font-size:25px;" target="_new_11">Linux</a></li>
+                    </ul>
+                </canvas>
+            </div>
+
+        </div>
+    </body>
+</html>

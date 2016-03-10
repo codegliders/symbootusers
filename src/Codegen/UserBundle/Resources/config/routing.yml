@@ -1,0 +1,212 @@
+codegen_user_homepage:
+    path:     /user/{name}
+    defaults: { _controller: CodegenUserBundle:Default:splash }
+
+#start page canvas with tags
+start:
+    path:   /start
+    defaults: { _controller: CodegenUserBundle:Default:start }
+    
+
+# USED
+    
+login:
+    path:     /login
+    defaults: { _controller: CodegenUserBundle:Default:login }
+    
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
+    
+# AJAX user list  page
+userlist2b:
+    path: /secured/userlist2b/{page}
+    defaults: { _controller: CodegenUserBundle:User:userlist2b, page: 1}
+    
+userajaxlistdata:
+    path: /secured/userajaxlistdata/
+    defaults: { _controller: CodegenUserBundle:User:userAjaxListData}
+    
+# NO-AJAX user list  
+userlist3:
+    path: /secured/userlist3/{page}/{numrecords}
+    defaults: { _controller: CodegenUserBundle:User:userlist3, page: 1, numrecords: 10}
+    
+useredit:
+    path: /secured/useredit
+    defaults: { _controller: CodegenUserBundle:User:userEdit}
+    
+usergridpager:
+    path: /secured/usergridpager/{page}
+    defaults: { _controller: CodegenUserBundle:User:userPager, page: 1}
+    
+# AJAX group list  page
+grouplistbs:
+    path: /secured/grouplistbs/{page}
+    defaults: { _controller: CodegenUserBundle:Group:GroupListBs, page: 1}
+    
+groupajaxlistdata:
+    path: /secured/groupajaxlistdata/
+    defaults: { _controller: CodegenUserBundle:Group:groupAjaxListData}
+    
+    
+groupedit:
+    path: /secured/groupedit
+    defaults: { _controller: CodegenUserBundle:Group:groupEdit}
+    
+groupgridpager:
+    path: /secured/groupgridpager/{page}
+    defaults: { _controller: CodegenUserBundle:Group:GroupPager, page: 1}
+    
+groupassocusers:
+    path: /secured/groupassocusers
+    defaults: { _controller: CodegenUserBundle:Group:groupAssocUsers}
+    
+groupdelete:
+    path: /secured/deletegroup
+    defaults: { _controller: CodegenUserBundle:Group:delete}
+    
+# AJAX role list  page
+rolelistbs:
+    path: /secured/rolelistbs/{page}
+    defaults: { _controller: CodegenUserBundle:Role:RoleListBs, page: 1}
+    
+roleajaxlistdata:
+    path: /secured/roleajaxlistdata/
+    defaults: { _controller: CodegenUserBundle:Role:roleAjaxListData}
+    
+    
+roleedit:
+    path: /secured/roleedit
+    defaults: { _controller: CodegenUserBundle:Role:roleEdit}
+    
+rolegridpager:
+    path: /secured/rolegridpager/{page}
+    defaults: { _controller: CodegenUserBundle:Role:RolePager, page: 1}
+    
+roleassocusers:
+    path: /secured/roleassocusers
+    defaults: { _controller: CodegenUserBundle:Role:roleAssocUsers}
+# END USED
+
+    
+    
+# USED BUT NOT REALLY REALLY NEEDED
+    
+usergrid:
+    path: /secured/usergrid
+    defaults: { _controller: CodegenUserBundle:Usergrid:index }
+    
+adduser:
+    path: /secured/adduser
+    defaults: { _controller: CodegenUserBundle:User:new }
+    
+adduserbs:
+    path: /adduserbs
+    defaults: { _controller: CodegenUserBundle:User:newbs }
+
+userlist:
+    path: /secured/userlist
+    defaults: { _controller: CodegenUserBundle:User:userlist}
+    
+userlist2:
+    path: /secured/userlist2/{page}
+    defaults: { _controller: CodegenUserBundle:User:userlist2b, page: 1}
+    
+userlist2b:
+    path: /secured/userlist2b/{page}
+    defaults: { _controller: CodegenUserBundle:User:userlist2, page: 1}
+
+userlist3:
+    path: /secured/userlist3/{page}/{numrecords}
+    defaults: { _controller: CodegenUserBundle:User:userlist3, page: 1, numrecords: 10}
+    
+userlist3np:
+    path: /secured/userlist3
+    defaults: { _controller: CodegenUserBundle:User:userlist3}
+    
+
+
+usergridajax:
+    path: /secured/usergridajax/
+    defaults: { _controller: CodegenUserBundle:User:userAjax}
+    
+userlistpage:
+    path: /secured/userlistpage/
+    defaults: { _controller: CodegenUserBundle:User:userListPage}
+     
+
+listusers:
+    path: /secured/listusers
+    defaults: { _controller: CodegenUserBundle:User:list}
+
+listusersbs:
+    path: /secured/listusers
+    defaults: { _controller: CodegenUserBundle:User:list}
+
+jsonlistusers:
+    path: /jsonlistusers
+    defaults: { _controller: CodegenUserBundle:User:jsonlist, _format: json }
+
+usergrid_edit:
+    path: /secured/edit
+    defaults: { _controller: CodegenUserBundle:User:edit}
+    
+usergrid_delete:
+    path: /secured/deleteuser
+    defaults: { _controller: CodegenUserBundle:User:delete}
+    
+
+user_change_pwd:
+    path: /secured/pwdchange
+    defaults: { _controller: CodegenUserBundle:User:pwdchange}
+
+user_splash:
+    path: /secured/splash
+    defaults: { _controller: CodegenUserBundle:Default:splash}
+    
+bssplash:
+    path: /secured/bssplash
+    defaults: { _controller: CodegenUserBundle:Default:bssplash}
+
+rolegrid:
+    path: /secured/rolegrid
+    defaults: { _controller: CodegenUserBundle:Rolegrid:index }
+    
+rolegrid_edit:
+    path: /secured/editrole
+    defaults: { _controller: CodegenUserBundle:Role:edit}
+    
+rolegrid_delete:
+    path: /secured/deleterole
+    defaults: { _controller: CodegenUserBundle:Role:delete}
+    
+addrole:
+    path: /secured/addrole
+    defaults: { _controller: CodegenUserBundle:Role:new }
+    
+groupgrid:
+    path: /secured/groupgrid
+    defaults: { _controller: CodegenUserBundle:Groupgrid:index }
+
+groupgridbs:
+    path: /secured/groupgrid/#
+    defaults: { _controller: CodegenUserBundle:Groupgrid:index }
+    
+groupgrid_edit:
+    path: /secured/editgroup
+    defaults: { _controller: CodegenUserBundle:Group:edit}
+    
+groupgrid_delete:
+    path: /secured/deletegroup
+    defaults: { _controller: CodegenUserBundle:Group:delete}
+    
+addgroup:
+    path: /secured/addgroup
+    defaults: { _controller: CodegenUserBundle:Group:new }
+    
+searchBy:
+    path: /secured/searchby
+    defaults: { _controller: CodegenUserBundle:User:searchBy }

@@ -1,0 +1,76 @@
+ 
+{% block stylesheets %}
+    <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />
+
+    <link href="{{ asset('plugins/bootstrap-multiselect/css/bootstrap-multiselect.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+
+    <link href="{{ asset('plugins/jquery-ui-custom/jquery-ui.css') }}" type="text/css" rel="stylesheet" />
+
+    <!--for multiselect-->
+    <link href="{{ asset('plugins/jQueryUI/jquery-ui-multiselect/css/ui.multiselect.css')}}" type="text/css" rel="stylesheet" />
+    <link href="{{ asset('plugins/lou-multi-select/css/multi-select.css')}}" type="text/css" rel="stylesheet" />
+
+
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('plugins/jquery-2.1.1.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}" ></script>
+
+    <script type="text/javascript" src="{{ asset('plugins/jquery-ui-custom/jquery-ui.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('plugins/bootstrap-multiselect/js/bootstrap-multiselect.js')}}"></script>
+
+
+    <script src="{{ asset('plugins/lou-multi-select/js/jquery.multi-select.js')}}"></script>
+    <script >
+        $(function() {
+            // $("#userform_role").selectmenu({width: 230});
+            //$("#userform_roles").multiSelect({'cssClass':'multiselect_edit_user_roles'});
+            $("#useredit_roles").multiSelect();
+        });
+
+    </script>
+
+{%endblock%}
+
+{% block body %}
+    <div class="modal-dialog modal-sm">
+        {{form_start(formedit)}}
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <span class="glyphicon glyphicon-list-alt blue">
+
+                    </span>
+                    &nbsp;&nbsp;Modifica ruolo</h4>
+            </div>
+            <div class="modal-body" style="">
+
+                <div class="form-role">
+                    <label> Nome</label>
+                    {{ form_widget(formedit.name) }} {{ form_errors(formedit.name) }}
+                </div>
+                <div class="form-role">
+                    <label> Descrizione</label>
+                    {{ form_widget(formedit.description) }} {{ form_errors(formedit.description) }}
+                </div>
+                <div class="form-role">
+                    <label> Livello di accesso</label>
+                    {{ form_widget(formedit.accessLevel) }}{{ form_errors(formedit.accessLevel) }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                {{ form_widget(formedit.cancel) }} 
+                {{ form_widget(formedit.save,{'label': 'Modifica ruolo'}  ) }} 
+
+            </div>
+
+        </div>
+        {{form_end(formedit)}}
+    </div>
+{% endblock%}

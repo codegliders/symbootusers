@@ -1,0 +1,255 @@
+@charset "UTF-8";
+/* 
+    Created on : Aug 20, 2014, 3:41:59 PM
+    Author     : paolo anghileri
+*/
+
+/*multiselect height*/
+.ms-height{
+    height: 200px;
+}
+
+/*for bs*/
+
+/*separate modal in two*/
+.lg-modal-sep-div{
+    
+    float:left;
+    width:50%;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+#login-form-bs{
+    position:relative;
+
+
+    color:#4F76A3;
+    margin:auto;
+    padding:20px;
+    top:200px;
+    width:400px;
+    padding:20px;
+    border:1px solid white;
+
+}
+.header-subtitle-bs{
+    position:relative;
+    padding-left:18px;
+
+   
+    font-size:15px;
+   
+}
+
+ .carousel-indicators li {
+    background: #428bca !important;
+}
+
+ .carousel-indicators .active {
+    background: #428bca !important;
+}
+/* end bs*/
+
+.blue {
+    color: #428bca;
+}
+
+.wrnyellow {
+    color: #428bca;
+}
+
+.wrnred{
+    color:#D9534F;
+}
+
+.wrnyellow{
+   color: #F0AD4E;
+}
+#header
+{
+    height: 80px;
+    background:#4F76A3;
+    color:#fff;
+    margin-bottom: 10px;
+}
+
+#nav
+{
+    float: left;
+    width: 180px;
+    height: 150px;
+    background-color: #999;
+    margin-bottom: 10px;
+}
+
+#content
+{
+    margin: 0 0px 10px 270px;
+    height: 150px;
+ 
+}
+
+#footer
+{
+    clear: both;
+    height: 50px;
+    background-color: #666;
+    margin-bottom: 10px;
+}
+
+
+#grid-container{
+
+
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+
+    color: #555555;
+    font-size: 1em;
+    background-color: #E6EDF5;
+
+}
+
+#login-form{
+    position:relative;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size:16px;
+    color:#4F76A3;
+    margin:auto;
+    top:200px;
+    width:240px;
+    padding:20px;
+    border:1px solid white;
+
+}
+
+#navbar {
+    position:absolute;
+    background-color: #f9f9f9;
+    float: left;
+    width: 260px;
+    height:300%;
+    z-index:10;
+}
+a{
+    color:#4F76A3;
+    text-decoration:none;
+}
+
+#navbar li{
+
+    color:#4F76A3;
+    font-size: 1.1em;
+    width: 20%;
+    height:100%;
+}
+
+#navbar li a{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    color:#4F76A3;
+    font-weight: bold;
+    font-size: 1.1em;
+    width: 20%;
+    height:100%;
+    text-decoration: none;
+}
+#sidebar {
+    position:relative;
+
+    width:50px;
+    background:#999;
+}
+
+
+.form-title{
+    padding-left:20px;
+padding-top:12px;
+padding-bottom:8px;
+    font-size:18px;
+}
+
+.login-body{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size:18px;
+    color:#fff;
+    background-color: #4F76A3
+
+}
+.main-title{
+    position:relative;
+    padding:18px;
+    padding-bottom:0px;
+
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size:20px;
+    color:#fff;
+}
+
+.header-subtitle{
+    position:relative;
+    padding-left:18px;
+
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size:16px;
+    color:#fff;
+}
+
+.form-even{
+    width:160px;
+    float:left;
+}
+
+.form-odd{
+   
+}
+.form-div{
+
+    padding: 14px;
+   
+
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  
+    color: #555555;
+    font-size: 1em;
+    background-color: #E6EDF5;
+
+}
+
+
+.multiselect_edit_user_groups{
+  /*position:relative;
+  display:inline;
+  
+      
+    width:300px;
+    height:200px;
+    
+    top:337px;
+    left:450px;*/
+}
+
+.multiselect_add_user_groups{
+/*
+    position:absolute;
+    top:380px;
+    left:450px;
+    */
+}
+.userform_add_group_spacer{
+   /* height:220px;*/
+}
+
+.userform_edit_group_spacer{
+    /*height:220px;
+    */}
+
+.required{
+    width:200px;
+}
+
+
+.ms-container{
+   
+  
+    display:inline-table;
+}
